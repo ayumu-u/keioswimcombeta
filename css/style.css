@@ -11,6 +11,8 @@
   --blue-100: #e8f2fa;
   --red: #c8102e;
   --red-dark: #a20c24;
+  --gold: #a8873a;
+  --cream: #fffdf7;
   --ink: #14202e;
   --ink-soft: #4c5b6b;
   --line: #dde5ec;
@@ -518,7 +520,7 @@ a { color: inherit; }
   font-size: .94rem;
 }
 
-/* ---------- Interviews ---------- */
+/* ---------- Interviews (合格体験記 / 証書デザイン) ---------- */
 .sample-notice {
   background: #fff8e6;
   border: 1px solid #f0d9a0;
@@ -527,29 +529,94 @@ a { color: inherit; }
   padding: 18px 22px;
   font-size: .85rem;
   color: #6b5410;
-  margin: 0 0 44px;
+  margin: 0 0 48px;
   line-height: 1.85;
 }
 
 .interviews {
   display: grid;
-  gap: 30px;
+  gap: 46px;
 }
-.itv {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 40px 40px 34px;
-  transition: box-shadow .3s;
-}
-.itv:hover { box-shadow: 0 16px 38px rgba(10, 37, 69, .08); }
 
-.itv-head {
+/* 証書の外枠 */
+.itv {
+  position: relative;
+  border: 3px solid var(--navy-800);
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(27, 108, 168, .05), transparent 62%),
+    repeating-linear-gradient(45deg, rgba(10, 37, 69, .022) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(-45deg, rgba(10, 37, 69, .022) 0 1px, transparent 1px 7px),
+    linear-gradient(var(--cream), #fbf8f0);
+  box-shadow: 0 14px 40px rgba(10, 37, 69, .12);
+  transition: transform .3s, box-shadow .3s;
+}
+.itv:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 54px rgba(10, 37, 69, .17);
+}
+
+/* 内側の金罫 */
+.cert-inner {
+  position: relative;
+  margin: 9px;
+  border: 1px solid var(--gold);
+  padding: 46px 48px 38px;
+}
+
+/* 四隅の飾り */
+.cert-corner {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--gold);
+  background: var(--cream);
+  transform: rotate(45deg);
+}
+.cert-corner.tl { left: -7px;  top: -7px; }
+.cert-corner.tr { right: -7px; top: -7px; }
+.cert-corner.bl { left: -7px;  bottom: -7px; }
+.cert-corner.br { right: -7px; bottom: -7px; }
+
+/* 証書ヘッダ */
+.cert-head {
+  text-align: center;
+  border-bottom: 3px double var(--gold);
+  padding-bottom: 22px;
+  margin-bottom: 32px;
+}
+.cert-no {
+  font-family: var(--font-serif);
+  font-size: .8rem;
+  letter-spacing: .34em;
+  text-indent: .34em;
+  color: var(--gold);
+  margin: 0 0 12px;
+}
+.cert-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3.6vw, 2.05rem);
+  letter-spacing: .42em;
+  text-indent: .42em;
+  font-weight: 600;
+  color: var(--navy-900);
+  margin: 0 0 10px;
+}
+.cert-en {
+  font-size: .62rem;
+  letter-spacing: .34em;
+  text-indent: .34em;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* 氏名欄 */
+.cert-name-row {
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 96px 1fr 92px;
   gap: 26px;
   align-items: center;
-  margin-bottom: 26px;
+  margin-bottom: 8px;
 }
 .itv-photo {
   aspect-ratio: 1;
@@ -557,77 +624,143 @@ a { color: inherit; }
   background: linear-gradient(150deg, var(--blue-100), var(--blue-400));
   display: grid;
   place-items: center;
-  color: rgba(255,255,255,.85);
-  font-size: .68rem;
-  letter-spacing: .2em;
+  color: rgba(255, 255, 255, .9);
+  font-size: .62rem;
+  letter-spacing: .18em;
   font-weight: 700;
+  box-shadow: 0 0 0 3px var(--cream), 0 0 0 4px rgba(168, 135, 58, .5);
 }
-.itv-tag {
-  display: inline-block;
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: #fff;
-  background: var(--navy-800);
-  padding: 4px 12px;
-  border-radius: 2px;
-  margin: 0 0 12px;
-}
-.itv-name {
-  font-family: var(--font-serif);
-  font-size: 1.5rem;
+.cert-label {
+  font-size: .66rem;
+  letter-spacing: .3em;
+  color: var(--ink-soft);
   margin: 0 0 8px;
-  font-weight: 600;
-  letter-spacing: .04em;
 }
-.itv-name span {
-  font-family: var(--font-sans);
-  font-size: .82rem;
-  color: var(--ink-soft);
-  font-weight: 400;
-  letter-spacing: .04em;
-}
-.itv-from {
-  margin: 0;
-  font-size: .82rem;
-  color: var(--ink-soft);
-}
-.itv-pull {
+.cert-name {
   font-family: var(--font-serif);
-  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
-  color: var(--navy-800);
-  line-height: 1.75;
-  margin: 0 0 24px;
-  padding-left: 20px;
-  border-left: 3px solid var(--red);
-  letter-spacing: .03em;
+  font-size: clamp(1.45rem, 4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: .16em;
+  color: var(--navy-900);
+  margin: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(10, 37, 69, .28);
 }
+/* 水泳部の印（大学公印ではありません） */
+.cert-seal {
+  width: 88px;
+  height: 88px;
+  justify-self: end;
+  border: 2px solid var(--red);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-serif);
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: .08em;
+  text-align: center;
+  color: var(--red);
+  opacity: .8;
+  transform: rotate(-9deg);
+  box-shadow: inset 0 0 0 3px rgba(200, 16, 46, .13);
+}
+
+/* 記載事項 */
+.cert-fields {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 34px;
+  margin: 24px 0 32px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(10, 37, 69, .12);
+}
+.cert-fields > div {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-bottom: 1px dotted rgba(10, 37, 69, .24);
+}
+.cert-fields .wide { grid-column: 1 / -1; }
+.cert-fields dt {
+  font-size: .71rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--ink-soft);
+}
+.cert-fields dd {
+  margin: 0;
+  font-size: .92rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* 証書中央の一言 */
+.cert-quote {
+  margin: 0 0 30px;
+  padding: 26px 18px;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+  line-height: 1.85;
+  letter-spacing: .05em;
+  color: var(--navy-800);
+  border-top: 1px solid var(--gold);
+  border-bottom: 1px solid var(--gold);
+}
+.cert-quote::before,
+.cert-quote::after {
+  color: var(--gold);
+  font-size: 1.4em;
+  line-height: 0;
+  vertical-align: -.12em;
+}
+.cert-quote::before { content: "\300C"; }
+.cert-quote::after  { content: "\300D"; }
+
+/* 本文 */
 .itv-body p {
   margin: 0 0 18px;
   font-size: .93rem;
   color: var(--ink-soft);
 }
-.itv-more {
-  display: none;
-}
+.itv-more { display: none; }
 .itv.is-open .itv-more { display: block; }
 
 .itv-toggle {
-  border: 1px solid var(--line);
-  background: none;
-  border-radius: var(--radius);
-  padding: 10px 24px;
-  font-size: .84rem;
+  display: block;
+  margin: 6px auto 0;
+  border: 1px solid var(--gold);
+  background: transparent;
+  border-radius: 2px;
+  padding: 10px 30px;
+  font-size: .82rem;
   font-weight: 700;
-  font-family: inherit;
+  font-family: var(--font-serif);
+  letter-spacing: .14em;
   color: var(--navy-800);
   cursor: pointer;
-  transition: background .2s, color .2s, border-color .2s;
+  transition: background .2s, color .2s;
 }
 .itv-toggle:hover {
   background: var(--navy-800);
-  color: #fff;
   border-color: var(--navy-800);
+  color: var(--cream);
+}
+
+/* 発行者 */
+.cert-issuer {
+  margin: 28px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(10, 37, 69, .1);
+  text-align: right;
+  font-family: var(--font-serif);
+  font-size: .78rem;
+  letter-spacing: .12em;
+  color: var(--ink-soft);
 }
 
 /* ---------- FAQ ---------- */
@@ -804,13 +937,24 @@ a { color: inherit; }
   .career-grid { grid-template-columns: 1fr; }
   .career-note { padding: 32px 26px; }
 
-  .itv { padding: 30px 24px 26px; }
-  .itv-head {
-    grid-template-columns: 84px 1fr;
-    gap: 18px;
+  .interviews { gap: 32px; }
+  .cert-inner { margin: 7px; padding: 30px 22px 26px; }
+  .cert-title { letter-spacing: .3em; text-indent: .3em; }
+  .cert-name-row {
+    grid-template-columns: 64px 1fr 58px;
+    gap: 14px;
   }
-  .itv-name { font-size: 1.25rem; }
-  .itv-pull { padding-left: 16px; }
+  .itv-photo { font-size: .52rem; letter-spacing: .12em; }
+  .cert-seal {
+    width: 58px;
+    height: 58px;
+    font-size: .56rem;
+    box-shadow: inset 0 0 0 2px rgba(200, 16, 46, .13);
+  }
+  .cert-fields { grid-template-columns: 1fr; }
+  .cert-fields > div { grid-template-columns: 86px 1fr; }
+  .cert-quote { padding: 20px 6px; }
+  .cert-issuer { font-size: .72rem; }
 
   .quote { padding: 34px 24px; }
 
