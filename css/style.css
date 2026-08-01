@@ -448,6 +448,27 @@ a { color: inherit; }
   padding: 38px 44px 32px;
 }
 
+/* 見本であることを示す透かし。
+   実際の取材記事に差し替える際は .cert-sample の要素ごと削除する */
+.cert-sample {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  margin: 0;
+  transform: translate(-50%, -50%) rotate(-24deg);
+  font-family: var(--font-serif);
+  font-size: clamp(3.4rem, 12vw, 7rem);
+  font-weight: 700;
+  letter-spacing: .3em;
+  text-indent: .3em;
+  line-height: 1;
+  white-space: nowrap;
+  color: rgba(200, 16, 46, .13);
+  pointer-events: none;
+  user-select: none;
+}
+
 .cert-corner {
   position: absolute;
   width: 13px; height: 13px;
@@ -1211,17 +1232,18 @@ a { color: inherit; }
 
 /* 極小幅では朱印を行から外し、氏名欄の横幅を確保する */
 @media (max-width: 420px) {
-  .cert-name-row { grid-template-columns: 76px minmax(0, 1fr); }
+  /* 朱印は氏名欄の下に回して、氏名の横幅を確保する */
+  .cert-name-row {
+    grid-template-columns: 76px minmax(0, 1fr);
+    row-gap: 10px;
+  }
   .cert-seal {
-    position: absolute;
-    right: 14px;
-    bottom: 14px;
-    justify-self: auto;
+    grid-column: 2;
+    justify-self: end;
   }
   .cert-name { font-size: 1.2rem; letter-spacing: .08em; }
   .cert-role { font-size: .74rem; }
   .cert-region { font-size: .62rem; }
-  .cert-pending { padding-bottom: 34px; }
   .cert-seal {
     width: 54px; height: 54px;
     font-size: .52rem;
