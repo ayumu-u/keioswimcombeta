@@ -30,7 +30,14 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+  /* iOS Safari が狭いカラム内で文字を勝手に拡大し、
+     レイアウトが崩れるのを防ぐ */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
   margin: 0;
@@ -486,14 +493,20 @@ a { color: inherit; }
 
 .cert-name-row {
   display: grid;
-  grid-template-columns: 132px 1fr 82px;
+  grid-template-columns: 132px minmax(0, 1fr) 82px;
   gap: 30px;
   align-items: center;
   margin-bottom: 26px;
 }
-/* 証明写真風の枠 */
+.cert-name-block { min-width: 0; }
+/* 証明写真風の枠。
+   行の高さに引き伸ばされないよう、寸法は明示して align-self も固定する */
 .itv-photo {
-  aspect-ratio: 3 / 4;
+  width: 132px;
+  height: 176px;
+  align-self: center;
+  justify-self: start;
+  flex: none;
   border-radius: 1px;
   overflow: hidden;
   background: linear-gradient(150deg, var(--blue-100), var(--blue-400));
@@ -1181,8 +1194,10 @@ a { color: inherit; }
   .interviews { gap: 24px; }
   .cert-inner { margin: 7px; padding: 26px 20px 22px; }
   .cert-title { letter-spacing: .3em; text-indent: .3em; }
-  .cert-name-row { grid-template-columns: 76px 1fr 50px; gap: 16px; }
+  .cert-name-row { grid-template-columns: 76px minmax(0, 1fr) 50px; gap: 16px; }
   .itv-photo {
+    width: 76px;
+    height: 101px;
     font-size: .48rem;
     letter-spacing: .1em;
     box-shadow:
@@ -1192,6 +1207,21 @@ a { color: inherit; }
       0 3px 10px rgba(10, 37, 69, .18);
   }
   .cert-pending { padding: 20px 4px 4px; }
+}
+
+/* 極小幅では朱印を行から外し、氏名欄の横幅を確保する */
+@media (max-width: 420px) {
+  .cert-name-row { grid-template-columns: 76px minmax(0, 1fr); }
+  .cert-seal {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    justify-self: auto;
+  }
+  .cert-name { font-size: 1.2rem; letter-spacing: .08em; }
+  .cert-role { font-size: .74rem; }
+  .cert-region { font-size: .62rem; }
+  .cert-pending { padding-bottom: 34px; }
   .cert-seal {
     width: 54px; height: 54px;
     font-size: .52rem;
