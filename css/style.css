@@ -919,106 +919,63 @@ a { color: inherit; }
 /* ============================================================
    卒業後の進路
    ============================================================ */
-.career-stats {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  background:
-    radial-gradient(circle at 20% 0%, rgba(27, 108, 168, .35), transparent 60%),
-    var(--navy-900);
+/* 段組みで隙間なく詰める（カードごとに高さが違っても余白が出ない） */
+.career-grid {
+  column-count: 4;
+  column-gap: 18px;
+}
+
+.career-card {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 0 0 18px;
+  padding: 16px 18px 18px;
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--navy-800);
   border-radius: var(--radius);
-  overflow: hidden;
-  margin-bottom: 44px;
+  transition: border-top-color .2s, box-shadow .2s;
 }
-.career-stats > div {
-  padding: 32px 20px;
-  text-align: center;
-  border-right: 1px solid rgba(255, 255, 255, .12);
-}
-.career-stats > div:last-child { border-right: 0; }
-.cs-num {
-  display: block;
-  font-family: var(--font-serif);
-  font-size: clamp(2.3rem, 5.5vw, 3.4rem);
-  font-weight: 700;
-  line-height: 1.05;
-  color: var(--gold);
-}
-.cs-label {
-  display: block;
-  margin-top: 10px;
-  font-size: .76rem;
-  letter-spacing: .2em;
-  color: rgba(255, 255, 255, .75);
+.career-card:hover {
+  background: #fff;
+  border-top-color: var(--red);
+  box-shadow: 0 10px 26px rgba(10, 37, 69, .1);
 }
 
-.career-list { border-top: 1px solid var(--line); }
-.career-row {
-  display: grid;
-  grid-template-columns: 176px minmax(0, 1fr);
-  gap: 26px;
-  align-items: start;
-  padding: 20px 12px;
-  margin: 0 -12px;
+.cc-cat {
+  margin: 0 0 10px;
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--line);
-  transition: background .2s;
-}
-.career-row:hover { background: var(--bg-tint); }
-
-.career-cat {
-  position: relative;
-  margin: 0;
-  padding-left: 18px;
   font-family: var(--font-serif);
-  font-size: 1.02rem;
+  font-size: .98rem;
   font-weight: 600;
-  letter-spacing: .06em;
+  letter-spacing: .08em;
   color: var(--navy-800);
 }
-.career-cat::before {
-  content: "";
-  position: absolute;
-  left: 0; top: .72em;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--red);
-}
 
-.career-companies {
+.cc-list {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  font-size: .81rem;
+  line-height: 1.95;
+  color: var(--ink-soft);
 }
-.career-companies li {
-  font-size: .83rem;
-  line-height: 1.6;
-  padding: 5px 13px;
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  background: #fff;
-  color: var(--ink);
-  transition: border-color .2s, color .2s;
-}
-.career-companies li:hover {
-  border-color: var(--blue-400);
-  color: var(--blue-600);
+.cc-list li { display: inline; }
+.cc-list li + li::before {
+  content: "／";
+  margin: 0 .15em;
+  color: var(--line);
 }
 
-@media (max-width: 780px) {
-  .career-stats { margin-bottom: 30px; }
-  .career-stats > div { padding: 24px 12px; }
-  .career-row {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 18px 0;
-    margin: 0;
-  }
-  .career-row:hover { background: none; }
-  .career-companies { gap: 6px; }
-  .career-companies li { font-size: .78rem; padding: 4px 10px; }
+@media (max-width: 1040px) { .career-grid { column-count: 3; } }
+@media (max-width: 780px)  { .career-grid { column-count: 2; column-gap: 12px; }
+  .career-card { margin-bottom: 12px; padding: 13px 14px 15px; }
+  .cc-cat { font-size: .88rem; margin-bottom: 8px; padding-bottom: 6px; }
+  .cc-list { font-size: .75rem; line-height: 1.85; }
 }
+@media (max-width: 360px)  { .career-grid { column-count: 1; } }
 
 /* ============================================================
    06. 保護者の方へ（別枠）
