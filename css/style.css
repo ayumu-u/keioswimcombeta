@@ -622,22 +622,6 @@ a { color: inherit; }
 }
 
 /* 折りたたみ時に見せる見出し + 要約 */
-.cert-headline {
-  font-family: var(--font-serif);
-  font-size: clamp(1.1rem, 2.6vw, 1.4rem);
-  font-weight: 600;
-  line-height: 1.65;
-  letter-spacing: .04em;
-  color: var(--navy-800);
-  margin: 0 0 14px;
-  padding-top: 22px;
-  border-top: 1px solid rgba(10, 37, 69, .12);
-}
-.cert-summary {
-  margin: 0 0 24px;
-  font-size: .91rem;
-  color: var(--ink-soft);
-}
 
 /* 展開部 */
 .itv-detail { display: none; }
@@ -923,6 +907,110 @@ a { color: inherit; }
 .essay p { margin: 0; font-size: .88rem; color: var(--ink-soft); }
 
 /* ============================================================
+   卒業後の進路
+   ============================================================ */
+.career-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(27, 108, 168, .35), transparent 60%),
+    var(--navy-900);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 44px;
+}
+.career-stats > div {
+  padding: 32px 20px;
+  text-align: center;
+  border-right: 1px solid rgba(255, 255, 255, .12);
+}
+.career-stats > div:last-child { border-right: 0; }
+.cs-num {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(2.3rem, 5.5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--gold);
+}
+.cs-label {
+  display: block;
+  margin-top: 10px;
+  font-size: .76rem;
+  letter-spacing: .2em;
+  color: rgba(255, 255, 255, .75);
+}
+
+.career-list { border-top: 1px solid var(--line); }
+.career-row {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+  padding: 20px 12px;
+  margin: 0 -12px;
+  border-bottom: 1px solid var(--line);
+  transition: background .2s;
+}
+.career-row:hover { background: var(--bg-tint); }
+
+.career-cat {
+  position: relative;
+  margin: 0;
+  padding-left: 18px;
+  font-family: var(--font-serif);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--navy-800);
+}
+.career-cat::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .72em;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+.career-companies {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.career-companies li {
+  font-size: .83rem;
+  line-height: 1.6;
+  padding: 5px 13px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: #fff;
+  color: var(--ink);
+  transition: border-color .2s, color .2s;
+}
+.career-companies li:hover {
+  border-color: var(--blue-400);
+  color: var(--blue-600);
+}
+
+@media (max-width: 780px) {
+  .career-stats { margin-bottom: 30px; }
+  .career-stats > div { padding: 24px 12px; }
+  .career-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 18px 0;
+    margin: 0;
+  }
+  .career-row:hover { background: none; }
+  .career-companies { gap: 6px; }
+  .career-companies li { font-size: .78rem; padding: 4px 10px; }
+}
+
+/* ============================================================
    06. 保護者の方へ（別枠）
    ============================================================ */
 .parents {
@@ -1000,35 +1088,6 @@ a { color: inherit; }
 /* ============================================================
    入部までの流れ + 連絡先
    ============================================================ */
-.steps {
-  list-style: none;
-  margin: 0 0 60px;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 18px;
-  counter-reset: step;
-}
-.step {
-  position: relative;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 30px 20px 24px;
-  text-align: center;
-}
-.step-no {
-  display: inline-grid;
-  place-items: center;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  background: var(--navy-800);
-  color: #fff;
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 14px;
-}
 .step h3 { margin: 0 0 10px; font-size: .98rem; }
 .step p { margin: 0; font-size: .83rem; color: var(--ink-soft); text-align: left; }
 
@@ -1163,7 +1222,15 @@ a { color: inherit; }
 @media (max-width: 1040px) {
   .nav { gap: 15px; }
   .nav a { font-size: .77rem; }
-  .steps { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ナビ項目が増えたぶん、ハンバーガーに切り替わる直前を詰める */
+@media (max-width: 940px) and (min-width: 781px) {
+  .nav { gap: 11px; }
+  .nav a { font-size: .72rem; }
+  .nav .nav-cta { padding: 8px 12px; }
+  .brand-main { font-size: .82rem; }
+  .brand-sub { font-size: .62rem; }
 }
 
 @media (max-width: 900px) {
@@ -1269,16 +1336,6 @@ a { color: inherit; }
   .parents-grid { grid-template-columns: 1fr; gap: 16px; }
 
   /* 入部 */
-  .steps { grid-template-columns: 1fr; gap: 12px; }
-  .step {
-    display: grid;
-    grid-template-columns: 40px 1fr;
-    gap: 6px 18px;
-    text-align: left;
-    padding: 22px 20px;
-    align-items: center;
-  }
-  .step-no { margin-bottom: 0; }
   .step h3 { margin: 0; }
   .step p { grid-column: 2; }
   .routes { padding: 28px 22px 24px; }
