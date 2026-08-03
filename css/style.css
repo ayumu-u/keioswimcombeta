@@ -1,5 +1,5 @@
 /* ============================================================
-   慶應義塾大学 体育会水泳部 競泳部門
+   慶應義塾体育会水泳部 競泳部門
    ============================================================ */
 
 :root {
@@ -272,7 +272,7 @@ a { color: inherit; }
    ============================================================ */
 .facts {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 2px;
   background: var(--line);
   border: 1px solid var(--line);
@@ -448,27 +448,6 @@ a { color: inherit; }
   padding: 38px 44px 32px;
 }
 
-/* 見本であることを示す透かし。
-   実際の取材記事に差し替える際は .cert-sample の要素ごと削除する */
-.cert-sample {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 3;
-  margin: 0;
-  transform: translate(-50%, -50%) rotate(-24deg);
-  font-family: var(--font-serif);
-  font-size: clamp(3.4rem, 12vw, 7rem);
-  font-weight: 700;
-  letter-spacing: .3em;
-  text-indent: .3em;
-  line-height: 1;
-  white-space: nowrap;
-  color: rgba(200, 16, 46, .13);
-  pointer-events: none;
-  user-select: none;
-}
-
 .cert-corner {
   position: absolute;
   width: 13px; height: 13px;
@@ -551,17 +530,26 @@ a { color: inherit; }
   transform: scale(var(--zoom, 1.6));
   transform-origin: 50% var(--focus, 25%);
 }
-.cert-region {
+.cert-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.cert-region,
+.cert-route {
   display: inline-block;
   font-size: .72rem;
   font-weight: 700;
-  letter-spacing: .12em;
-  color: #fff;
-  background: var(--red);
-  padding: 3px 12px;
+  letter-spacing: .08em;
+  padding: 4px 12px;
   border-radius: 2px;
-  margin: 0 0 10px;
+  white-space: nowrap;
 }
+.cert-region { color: #fff; background: var(--navy-800); }
+/* 入試方式はこのサイトの主題なので目立たせる */
+.cert-route { color: #fff; background: var(--red); }
+
 .cert-name {
   font-family: var(--font-serif);
   font-size: clamp(1.4rem, 3.8vw, 1.95rem);
@@ -570,7 +558,16 @@ a { color: inherit; }
   color: var(--navy-900);
   margin: 0 0 6px;
 }
-.cert-role { margin: 0; font-size: .8rem; color: var(--ink-soft); }
+.cert-kana {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  font-weight: 400;
+  letter-spacing: .16em;
+  color: var(--ink-soft);
+  margin-top: 6px;
+}
+.cert-role { margin: 8px 0 0; font-size: .8rem; color: var(--ink-soft); }
 
 /* 取材待ちの項目 */
 .cert-region.is-pending {
@@ -655,7 +652,7 @@ a { color: inherit; }
 }
 .cert-fields > div {
   display: grid;
-  grid-template-columns: 96px 1fr;
+  grid-template-columns: 152px 1fr;
   gap: 12px;
   align-items: baseline;
   padding: 11px 0;
@@ -1251,7 +1248,7 @@ a { color: inherit; }
   }
   .cert-region { font-size: .66rem; padding: 2px 9px; }
   .cert-fields { grid-template-columns: 1fr; }
-  .cert-fields > div { grid-template-columns: 86px 1fr; }
+  .cert-fields > div { grid-template-columns: 1fr; gap: 2px; padding: 9px 0; }
   .cert-quote { padding: 20px 6px; }
   .cert-issuer { font-size: .7rem; }
 
