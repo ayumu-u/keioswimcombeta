@@ -36,7 +36,7 @@ document.querySelectorAll('.itv-toggle').forEach((btn) => {
 
 // ---- スマホ用 固定CTA（ヒーローを過ぎてから、フッター手前まで表示） ----
 const stickyCta = document.getElementById('stickyCta');
-const hero = document.querySelector('.hero');
+const hero = document.querySelector('.hero, .page-head');
 const footer = document.querySelector('.site-footer');
 
 if (stickyCta && hero && footer && 'IntersectionObserver' in window) {
