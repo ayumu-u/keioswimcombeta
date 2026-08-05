@@ -14,15 +14,19 @@
 </script>
 <title>慶應義塾体育会水泳部 競泳部門</title>
 <meta name="description" content="慶應義塾体育会水泳部 競泳部門。水泳とキャリア、どちらも一切妥協しない4年間。部活紹介、合格体験記、Q&Aと保護者の方へのご案内。">
-<link rel="stylesheet" href="css/style.css?v=11">
+<link rel="stylesheet" href="css/style.css?v=15">
 </head>
 <body id="top">
 
 <header class="site-header">
   <div class="container nav-inner">
     <a href="index.html" class="brand">
-      <span class="brand-main">慶應義塾体育会水泳部</span>
-      <span class="brand-sub">競泳部門</span>
+      <img class="brand-logo" src="images/logo/emblem.png" width="240" height="192"
+           alt="慶應義塾体育会水泳部 競泳部門">
+      <span class="brand-text">
+        <span class="brand-main">慶應義塾体育会水泳部</span>
+        <span class="brand-sub">競泳部門</span>
+      </span>
     </a>
 
     <nav class="nav" id="site-nav">
@@ -32,7 +36,7 @@
     </nav>
 
     <div class="nav-actions">
-      <a class="nav-ig" href="https://www.instagram.com/keioswim?igsh=aXF6OTR2aHh1M2k=" target="_blank" rel="noopener noreferrer" aria-label="公式Instagram（別タブで開きます）"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.2"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.25" class="ig-dot"/></svg></a>
+      <a class="nav-ig" href="https://www.instagram.com/keioswim?igsh=aXF6OTR2aHh1M2k=" target="_blank" rel="noopener noreferrer" aria-label="公式Instagram（別タブで開きます）"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><defs><radialGradient id="igGrad" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect x="1.6" y="1.6" width="20.8" height="20.8" rx="6" fill="url(#igGrad)"/><rect x="4.7" y="4.7" width="14.6" height="14.6" rx="4.3" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="12" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="1.7"/><circle cx="17.2" cy="6.9" r="1.15" fill="#fff"/></svg></a>
       <a class="nav-cta" href="contact.html">見学・相談</a>
       <button class="nav-toggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="site-nav">
         <span></span><span></span><span></span>
@@ -41,28 +45,36 @@
   </div>
 </header>
 
-<!-- ===== ファーストビュー ===== -->
-<section class="hero">
-  <div class="hero-bg" aria-hidden="true">
-    <span class="lane"></span><span class="lane"></span><span class="lane"></span>
-    <span class="lane"></span><span class="lane"></span>
-  </div>
-  <div class="container hero-inner">
-    <p class="hero-eyebrow">KEIO UNIVERSITY SWIMMING TEAM</p>
-    <h1 class="hero-title">
-      水泳も、将来も、<br>
-      どちらも頂点を。
-    </h1>
-    <p class="hero-lead">
-      水泳とキャリア、どちらも一切妥協しない4年間。
-    </p>
-    <div class="hero-actions">
-      <a href="voices.html" class="btn btn-primary">合格体験記を読む</a>
-      <a href="team.html" class="btn btn-ghost">部活について知る</a>
+<!-- ===== ファーストビュー（スクロール固定演出） ===== -->
+<section class="hs" id="heroSticky">
+  <!-- 高さがそのままスクロール量になる（2ステップ分） -->
+  <div class="hs-track">
+    <div class="hs-stage">
+
+      <!-- Step 1 -->
+      <div class="hs-slide is-active" data-step="1">
+        <!-- TODO: 背景画像に差し替え（ガウン／ジャージの背中姿）-->
+        <div class="hs-bg hs-bg-1" aria-hidden="true"></div>
+        <div class="hs-inner container">
+          <h1 class="hs-copy">水泳も、将来も、<br>どちらも頂点を。</h1>
+          <p class="hs-sub">水泳とキャリア、どちらも一切妥協しない4年間。</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="hs-slide" data-step="2">
+        <!-- TODO: 背景画像に差し替え（集合写真）-->
+        <div class="hs-bg hs-bg-2" aria-hidden="true"></div>
+        <div class="hs-inner container">
+          <p class="hs-en">KEIO UNIVERSITY<br>SWIM CLUB</p>
+        </div>
+      </div>
+
+      <span class="hs-scroll" aria-hidden="true"><span></span></span>
+      <div class="hs-dots" aria-hidden="true">
+        <span class="is-on"></span><span></span>
+      </div>
     </div>
-  </div>
-  <div class="hero-wave" aria-hidden="true">
-    <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0,64 C240,120 480,8 720,48 C960,88 1200,32 1440,72 L1440,120 L0,120 Z"></path></svg>
   </div>
 </section>
 
@@ -83,23 +95,6 @@
   </div>
 </section>
 
-<!-- ===== ステートメント ===== -->
-<section class="statement">
-  <div class="container container-narrow">
-    <p class="st-eyebrow reveal">NO SPORTS RECOMMENDATION</p>
-    <p class="st-lead reveal">慶應義塾大学に、スポーツ推薦はありません。</p>
-    <span class="st-rule reveal" aria-hidden="true"></span>
-    <p class="st-main reveal">
-      それでも、<em>ここで泳ぐ</em>と決めた人が集まっています。
-    </p>
-    <p class="st-sub reveal">
-      競技実績だけで入れる道は、用意されていません。
-      だから部員は全員、自分の力で入試を突破してここにいます。<br>
-      「速くなりたい」と「慶應で学びたい」を、どちらも手放さなかった人たちです。
-    </p>
-  </div>
-</section>
-
 <!-- ===== 3つの入り口 ===== -->
 <section class="pillars">
   <div class="container">
@@ -114,7 +109,7 @@
         <h3 class="pillar-title">部活について</h3>
         <p class="pillar-sub">水泳環境・活動内容</p>
         <p class="pillar-catch">自ら思考するトレーニングで成長する環境</p>
-        <span class="pillar-more">くわしく見る</span>
+        <span class="pillar-btn">Click <span class="pb-arrow" aria-hidden="true">→</span></span>
       </a>
 
       <a class="pillar pillar-b reveal" href="voices.html">
@@ -122,7 +117,7 @@
         <h3 class="pillar-title">入部にあたって</h3>
         <p class="pillar-sub">合格体験記</p>
         <p class="pillar-catch">一般・AO・推薦。先輩たちが慶應の切符を掴んだリアルな戦略。</p>
-        <span class="pillar-more">くわしく見る</span>
+        <span class="pillar-btn">Click <span class="pb-arrow" aria-hidden="true">→</span></span>
       </a>
 
       <a class="pillar pillar-c reveal" href="faq.html">
@@ -130,7 +125,7 @@
         <h3 class="pillar-title">Q&amp;A・保護者の方へ</h3>
         <p class="pillar-sub">両立・進路・費用</p>
         <p class="pillar-catch">学業・就職との両立、費用や寮生活に関する疑問に答えます。</p>
-        <span class="pillar-more">くわしく見る</span>
+        <span class="pillar-btn">Click <span class="pb-arrow" aria-hidden="true">→</span></span>
       </a>
     </div>
   </div>
@@ -172,6 +167,6 @@
   <a href="contact.html" class="sticky-btn">見学・相談する</a>
 </div>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=2"></script>
 </body>
 </html>

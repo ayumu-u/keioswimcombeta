@@ -61,6 +61,40 @@ if (stickyCta && hero && footer && 'IntersectionObserver' in window) {
   }).observe(footer);
 }
 
+// ---- ファーストビューの固定スクロール演出 ----
+const hs = document.getElementById('heroSticky');
+
+if (hs) {
+  const track  = hs.querySelector('.hs-track');
+  const slides = [...hs.querySelectorAll('.hs-slide')];
+  const dots   = [...hs.querySelectorAll('.hs-dots span')];
+  const scrollHint = hs.querySelector('.hs-scroll');
+  let current = -1;
+
+  const show = (i) => {
+    if (i === current) return;
+    current = i;
+    slides.forEach((s, n) => s.classList.toggle('is-active', n === i));
+    dots.forEach((d, n) => d.classList.toggle('is-on', n === i));
+    // 最後のステップではスクロール指示を消す
+    if (scrollHint) scrollHint.style.opacity = i >= slides.length - 1 ? '0' : '';
+  };
+
+  const update = () => {
+    const rect = track.getBoundingClientRect();
+    // 固定されている間の進捗（0〜1）
+    const total = rect.height - window.innerHeight;
+    const progress = total > 0 ? Math.min(Math.max(-rect.top / total, 0), 1) : 0;
+    // 進捗を等分してステップに割り当てる
+    show(Math.min(Math.floor(progress * slides.length), slides.length - 1));
+  };
+
+  // rAF を挟むと非表示タブで取りこぼすため、軽い処理をそのまま実行する
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+}
+
 // ---- スクロールで表示 ----
 const targets = document.querySelectorAll('.reveal');
 
