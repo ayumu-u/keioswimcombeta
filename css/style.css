@@ -1435,25 +1435,30 @@ a { color: inherit; }
   transition: transform 1.4s ease;
 }
 .hs-slide.is-active .hs-bg { transform: scale(1); }
-/* 画像を受け取ったら background-image を差し替える（暫定のダミー背景） */
+/* 背景写真。写真が届いたら各 --shot の url() を差し替えるだけでよい。
+   暗いオーバーレイは白文字が読めるよう別レイヤーで重ねている */
+.hs-bg-1, .hs-bg-2, .hs-bg-3 {
+  background-image:
+    linear-gradient(180deg, rgba(6,24,47,.45) 0%, rgba(6,24,47,.72) 55%, rgba(6,24,47,.88) 100%),
+    var(--shot), var(--fallback);
+}
+/* TODO: 慶應ジャージのバックショットに差し替え */
 .hs-bg-1 {
-  background-image:
-    linear-gradient(180deg, rgba(6,24,47,.55) 0%, rgba(6,24,47,.78) 100%),
-    repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
-    linear-gradient(155deg, #06182f 0%, #103459 55%, #1b6ca8 100%);
+  --shot: none;
+  --fallback: repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
+              linear-gradient(155deg, #06182f 0%, #103459 55%, #1b6ca8 100%);
 }
+/* TODO: 協生館プール前での部員集合写真に差し替え */
 .hs-bg-2 {
-  background-image:
-    linear-gradient(180deg, rgba(6,24,47,.5) 0%, rgba(6,24,47,.75) 100%),
-    repeating-linear-gradient(65deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
-    linear-gradient(200deg, #0a2545 0%, #1b6ca8 60%, #4a9fd8 100%);
+  --shot: none;
+  --fallback: repeating-linear-gradient(65deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
+              linear-gradient(200deg, #0a2545 0%, #1b6ca8 60%, #4a9fd8 100%);
 }
-
+/* TODO: 慶應ガウンを着て円陣を組む写真に差し替え */
 .hs-bg-3 {
-  background-image:
-    linear-gradient(180deg, rgba(6,24,47,.62) 0%, rgba(6,24,47,.86) 100%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, transparent 2px 30px),
-    linear-gradient(140deg, #06182f 0%, #12325a 50%, #0a2545 100%);
+  --shot: none;
+  --fallback: repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, transparent 2px 30px),
+              linear-gradient(140deg, #06182f 0%, #12325a 50%, #0a2545 100%);
 }
 
 .hs-inner { position: relative; z-index: 2; color: #fff; }
@@ -1825,6 +1830,266 @@ a { color: inherit; }
   .pillars { padding-bottom: 66px; }
   .contact-guide { margin-top: 32px; padding: 24px 20px 20px; }
   .vp-icon { width: 50px; height: 50px; }
+}
+
+/* ============================================================
+   施設・環境
+   ============================================================ */
+.facility {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 52px;
+}
+.ph-frame { margin: 0; }
+.ph-frame.is-wide { grid-column: span 3; }
+.ph-frame img,
+.ph-empty {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+  object-fit: cover;
+  display: block;
+}
+.ph-frame.is-wide img,
+.ph-frame.is-wide .ph-empty { aspect-ratio: 21 / 9; }
+.ph-empty {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  background: linear-gradient(150deg, var(--navy-700), var(--blue-600));
+  color: rgba(255,255,255,.75);
+}
+.ph-empty span {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .26em;
+  text-indent: .26em;
+}
+.ph-empty small { font-size: .7rem; color: rgba(255,255,255,.6); }
+.ph-empty.is-pending {
+  background: var(--bg-tint);
+  border: 1px dashed var(--line);
+  color: var(--ink-soft);
+}
+.ph-empty.is-pending small { color: var(--ink-soft); }
+.ph-frame figcaption {
+  margin-top: 9px;
+  font-size: .8rem;
+  color: var(--ink-soft);
+}
+
+.env-points {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.env-point {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--navy-800);
+  border-radius: var(--radius);
+  padding: 26px 24px 24px;
+}
+.ep-no {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--font-serif);
+  font-size: .95rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  color: var(--red);
+}
+.env-point h3 { margin: 0 0 10px; font-size: 1rem; line-height: 1.6; }
+.env-point p { margin: 0; font-size: .88rem; color: var(--ink-soft); }
+
+/* ============================================================
+   部員構成データ
+   ============================================================ */
+.dt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+.dt-card {
+  margin: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 26px 22px;
+}
+.dt-head { margin-bottom: 20px; }
+.dt-title {
+  margin: 0 0 8px;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+.dt-msg { margin: 0; font-size: .84rem; line-height: 1.8; color: var(--ink-soft); }
+
+.dt-body {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+.dt-body.is-bars { grid-template-columns: 1fr; }
+
+/* ドーナツ */
+.dn { width: 100%; height: auto; }
+/* 回転はCSS側に一本化する。SVGのtransform属性と併用すると
+   transform-origin が二重に効いて位置がずれるため */
+.dn-seg {
+  transform: rotate(-90deg);
+  transform-origin: 70px 70px;
+}
+.dn-total {
+  font-family: var(--font-serif);
+  font-size: 30px;
+  font-weight: 700;
+  fill: var(--navy-900);
+}
+.dn-unit { font-size: 11px; fill: var(--ink-soft); letter-spacing: .1em; }
+
+.dn-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.dn-legend li {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: baseline;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.dn-legend li:last-child { border-bottom: 0; padding-bottom: 0; }
+.lg-dot {
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  align-self: center;
+}
+.lg-name { font-size: .87rem; font-weight: 600; }
+.lg-val {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--navy-900);
+}
+.lg-val small { font-size: .68rem; font-weight: 400; color: var(--ink-soft); margin-left: 2px; }
+.lg-pct { font-size: .78rem; color: var(--ink-soft); min-width: 2.6em; text-align: right; }
+
+/* 横棒 */
+.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 13px; }
+.bars li {
+  display: grid;
+  grid-template-columns: 8.5em minmax(0, 1fr) 3.4em;
+  gap: 12px;
+  align-items: center;
+}
+.br-name { font-size: .82rem; font-weight: 600; }
+.br-track {
+  height: 13px;
+  background: var(--bg-tint);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.br-fill {
+  display: block;
+  height: 100%;
+  background: var(--blue-600);
+  border-radius: 4px;
+  transition: width .8s cubic-bezier(.2,.7,.3,1);
+}
+.br-val {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy-900);
+  text-align: right;
+}
+.br-val small { font-size: .64rem; font-weight: 400; color: var(--ink-soft); margin-left: 2px; }
+
+/* 数値表 */
+.dt-table { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 12px; }
+.dt-table summary {
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  list-style: none;
+}
+.dt-table summary::-webkit-details-marker { display: none; }
+.dt-table summary::before { content: "＋ "; color: var(--red); }
+.dt-table[open] summary::before { content: "− "; }
+.dt-table table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+.dt-table th, .dt-table td {
+  padding: 7px 6px;
+  font-size: .78rem;
+  text-align: right;
+  border-bottom: 1px solid var(--line);
+}
+.dt-table thead th { color: var(--ink-soft); font-weight: 700; }
+.dt-table tbody th { text-align: left; font-weight: 600; }
+
+/* ============================================================
+   指導体制
+   ============================================================ */
+.sys-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.sys-card {
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 26px 24px;
+}
+.sys-no {
+  display: inline-grid;
+  place-items: center;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--navy-800);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: .9rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.sys-card h3 { margin: 0 0 10px; font-size: 1rem; line-height: 1.6; }
+.sys-card p { margin: 0; font-size: .88rem; color: var(--ink-soft); }
+
+@media (max-width: 900px) {
+  .facility { grid-template-columns: repeat(2, 1fr); }
+  .ph-frame.is-wide { grid-column: span 2; }
+  .env-points, .sys-grid { grid-template-columns: 1fr; gap: 14px; }
+  .dt-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 780px) {
+  .facility { gap: 12px; margin-bottom: 36px; }
+  .ph-frame figcaption { margin-top: 7px; font-size: .74rem; }
+  .env-point, .sys-card { padding: 20px 18px 18px; }
+  .dt-card { padding: 22px 18px 18px; }
+  .dt-body { grid-template-columns: 118px minmax(0, 1fr); gap: 16px; }
+  .dt-title { font-size: 1.05rem; }
+  .dt-msg { font-size: .8rem; }
+  .lg-val { font-size: 1.1rem; }
+  .bars li { grid-template-columns: 7em minmax(0, 1fr) 3em; gap: 9px; }
+  .br-name { font-size: .76rem; }
+}
+
+@media (max-width: 420px) {
+  .facility { grid-template-columns: 1fr; }
+  .ph-frame.is-wide { grid-column: span 1; }
+  .dt-body { grid-template-columns: 1fr; justify-items: center; }
+  .dt-body .dn { max-width: 160px; }
+  .dn-legend { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .br-fill { transition: none; }
 }
 
 /* ---------- Reveal ---------- */
