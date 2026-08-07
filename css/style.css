@@ -31,6 +31,8 @@
 * { box-sizing: border-box; }
 
 html {
+  /* 端でのバウンドやスライドの隙間から白地が覗かないようにする */
+  background-color: #000;
   scroll-behavior: smooth;
   scroll-padding-top: 76px;
   /* iOS Safari が狭いカラム内で文字を勝手に拡大し、
@@ -1399,16 +1401,20 @@ a { color: inherit; }
 /* ============================================================
    ファーストビュー（スクロール固定演出）
    ============================================================ */
-.hs { position: relative; }
+.hs { position: relative; background: #000; }
 /* トラックの高さ = 固定したままスクロールさせたい量 */
-.hs-track { height: 340vh; }
+.hs-track { height: 340vh; background: #000; }
 .hs-stage {
   position: sticky;
   top: 0;
   height: 100vh;
-  height: 100svh;
+  height: 100dvh;
+  min-height: 100dvh;
   overflow: hidden;
-  background: var(--navy-900);
+  background: #000;
+  /* 合成レイヤーに載せて切替を滑らかにする */
+  will-change: transform;
+  transform: translateZ(0);
 }
 .hs-slide {
   position: absolute;
@@ -1416,14 +1422,15 @@ a { color: inherit; }
   display: grid;
   align-content: center;
   opacity: 0;
-  visibility: hidden;
-  /* 消える側を先に抜き、入る側を少し遅らせて文字の重なりを避ける */
-  transition: opacity .35s ease, visibility .35s;
+  pointer-events: none;
+  /* opacity だけを動かし、GPU 合成に載せてカクつきを抑える */
+  transition: opacity .5s cubic-bezier(.4, 0, .2, 1);
+  will-change: opacity;
 }
 .hs-slide.is-active {
   opacity: 1;
-  visibility: visible;
-  transition: opacity .55s ease .3s, visibility .55s .3s;
+  pointer-events: auto;
+  transition: opacity .6s cubic-bezier(.4, 0, .2, 1) .12s;
 }
 
 .hs-bg {
@@ -1431,20 +1438,21 @@ a { color: inherit; }
   inset: 0;
   background-size: cover;
   background-position: center;
-  transform: scale(1.06);
-  transition: transform 1.4s ease;
+  transform: scale(1.04) translateZ(0);
+  transition: transform 1.6s cubic-bezier(.2, .6, .2, 1);
+  backface-visibility: hidden;
 }
-.hs-slide.is-active .hs-bg { transform: scale(1); }
+.hs-slide.is-active .hs-bg { transform: scale(1) translateZ(0); }
 /* 背景写真。写真が届いたら各 --shot の url() を差し替えるだけでよい。
    暗いオーバーレイは白文字が読めるよう別レイヤーで重ねている */
 .hs-bg-1, .hs-bg-2, .hs-bg-3 {
   background-image:
-    linear-gradient(180deg, rgba(6,24,47,.6) 0%, rgba(6,24,47,.78) 42%, rgba(6,24,47,.92) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.18) 0%, rgba(0,0,0,.10) 30%, rgba(6,24,47,.55) 62%, rgba(6,24,47,.82) 100%),
     var(--shot), var(--fallback);
 }
-/* TODO: 慶應ジャージのバックショット撮影後に差し替え（暫定でプール全景を使用） */
 .hs-bg-1 {
-  --shot: url("../images/facility/pool.jpg");
+  background-position: 50% 40%;
+  --shot: url("../images/hero/slide1.jpg");
   --fallback: linear-gradient(155deg, #06182f 0%, #103459 55%, #1b6ca8 100%);
 }
 .hs-bg-2 {
@@ -1464,7 +1472,7 @@ a { color: inherit; }
   font-weight: 600;
   line-height: 1.45;
   letter-spacing: .05em;
-  text-shadow: 0 2px 24px rgba(0,0,0,.35);
+  text-shadow: 0 1px 3px rgba(0,0,0,.55), 0 4px 24px rgba(0,0,0,.45);
 }
 .hs-sub {
   margin: 0;
@@ -1478,7 +1486,7 @@ a { color: inherit; }
   font-weight: 700;
   line-height: 1.35;
   letter-spacing: .16em;
-  text-shadow: 0 2px 24px rgba(0,0,0,.35);
+  text-shadow: 0 1px 3px rgba(0,0,0,.55), 0 4px 24px rgba(0,0,0,.45);
 }
 
 /* スライド3は情報量が多いので、収まらない場合だけ内部でスクロールさせる */
@@ -1494,6 +1502,9 @@ a { color: inherit; }
 
 .hs-body {
   margin: 0;
+  text-shadow: 0 1px 3px rgba(0,0,0,.55);
+  /* スライド切替時に下から白地が覗くのを防ぐ */
+  background-color: #000;
   max-width: 44em;
   font-size: clamp(.86rem, 1.5vw, 1rem);
   line-height: 1.95;
@@ -1690,6 +1701,10 @@ a { color: inherit; }
 
 @media (max-width: 780px) {
   .hs-track { height: 320vh; }
+  /* 縦長画面では被写体が切れないよう寄せる */
+  .hs-bg { background-position: 58% center; }
+  .hs-bg-1 { background-position: 50% 38%; }
+  .hs-bg-2 { background-position: 62% center; }
   .hs-dots { right: 16px; gap: 8px; }
   .hs-scroll { bottom: 26px; height: 44px; }
   .pillar-btn { width: 100%; justify-content: center; padding: 15px 20px; }
@@ -2068,6 +2083,205 @@ a { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   .br-fill { transition: none; }
+}
+
+/* ============================================================
+   ページ内目次
+   ============================================================ */
+.pagenav {
+  position: sticky;
+  top: 68px;
+  z-index: 90;
+  background: rgba(255, 255, 255, .96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.pagenav-inner {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pagenav-inner::-webkit-scrollbar { display: none; }
+.pagenav a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 15px 16px;
+  font-size: .81rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.pagenav a span {
+  display: grid;
+  place-items: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--navy-800);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: .68rem;
+}
+.pagenav a:hover { color: var(--red); border-bottom-color: var(--red); }
+
+/* ============================================================
+   指導・サポート体制
+   ============================================================ */
+.sup-two {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  margin-bottom: 56px;
+}
+.sup-col {
+  background: var(--bg-tint);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--navy-800);
+  border-radius: var(--radius);
+  padding: 30px 28px 26px;
+}
+.sup-col:last-child { border-top-color: var(--red); }
+.sup-label {
+  margin: 0 0 12px;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: var(--red);
+}
+.sup-col:first-child .sup-label { color: var(--blue-600); }
+.sup-title {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: .03em;
+}
+.sup-col p { margin: 0 0 14px; font-size: .89rem; color: var(--ink-soft); }
+.sup-col p:last-child { margin-bottom: 0; }
+
+/* コーチ紹介をサポート体制の中に置く */
+.coach-block {
+  background: var(--navy-900);
+  border-radius: var(--radius);
+  padding: 44px 42px;
+  margin-bottom: 52px;
+  color: #fff;
+}
+.coach-block .note { color: rgba(255,255,255,.6); }
+
+/* トレーナー */
+.tr-heading {
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+}
+.tr-lead {
+  margin: 0 0 30px;
+  max-width: 46em;
+  font-size: .9rem;
+  color: var(--ink-soft);
+}
+.tr-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.tr-list li { display: grid; justify-items: center; }
+/* 3人分を1枚にまとめた画像を位置指定で切り出す */
+.tr-face {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background-image: url("../images/support/trainers.jpg");
+  background-size: 300% 100%;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 1px var(--line);
+  margin-bottom: 14px;
+}
+.tr-face[data-i="0"] { background-position:   0% center; }
+.tr-face[data-i="1"] { background-position:  50% center; }
+.tr-face[data-i="2"] { background-position: 100% center; }
+.tr-name {
+  font-size: .96rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.tr-name small { font-size: .76rem; font-weight: 400; margin-left: 2px; }
+.tr-org { margin-top: 4px; font-size: .78rem; color: var(--ink-soft); }
+
+/* ============================================================
+   水泳部寮
+   ============================================================ */
+.dorm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.dorm-photos { display: grid; gap: 14px; }
+.dorm-photos .ph-frame img { aspect-ratio: 4 / 3; }
+.dorm-photos .ph-frame:first-child img { aspect-ratio: 3 / 4; }
+
+.dorm-spec {
+  margin: 0 0 26px;
+  border-top: 1px solid var(--line);
+}
+.dorm-spec > div {
+  display: grid;
+  grid-template-columns: 6.5em 1fr;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+.dorm-spec dt {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: var(--ink-soft);
+}
+.dorm-spec dd { margin: 0; font-size: .95rem; }
+.dorm-spec dd strong {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--navy-900);
+  margin-right: 2px;
+}
+.dorm-spec dd span {
+  display: block;
+  margin-top: 3px;
+  font-size: .78rem;
+  color: var(--ink-soft);
+}
+.dorm-note { margin: 0 0 14px; font-size: .9rem; color: var(--ink-soft); }
+.dorm-note:last-child { margin-bottom: 0; }
+
+@media (max-width: 900px) {
+  .sup-two { grid-template-columns: 1fr; gap: 16px; }
+  .dorm-grid { grid-template-columns: 1fr; gap: 26px; }
+  .dorm-photos { grid-template-columns: 1fr 1fr; }
+  .coach-block { padding: 28px 22px; }
+}
+
+@media (max-width: 780px) {
+  .pagenav { top: 68px; }
+  .pagenav a { padding: 12px 12px; font-size: .74rem; }
+  .pagenav a span { width: 18px; height: 18px; font-size: .62rem; }
+  .sup-col { padding: 22px 18px 20px; }
+  .sup-title { font-size: 1.05rem; }
+  .tr-list { grid-template-columns: 1fr; gap: 22px; }
+  .tr-face { width: 108px; height: 108px; }
+  .dorm-spec > div { grid-template-columns: 5.4em 1fr; gap: 10px; padding: 13px 0; }
 }
 
 /* ---------- Reveal ---------- */
