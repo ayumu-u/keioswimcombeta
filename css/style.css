@@ -1439,26 +1439,21 @@ a { color: inherit; }
    暗いオーバーレイは白文字が読めるよう別レイヤーで重ねている */
 .hs-bg-1, .hs-bg-2, .hs-bg-3 {
   background-image:
-    linear-gradient(180deg, rgba(6,24,47,.45) 0%, rgba(6,24,47,.72) 55%, rgba(6,24,47,.88) 100%),
+    linear-gradient(180deg, rgba(6,24,47,.6) 0%, rgba(6,24,47,.78) 42%, rgba(6,24,47,.92) 100%),
     var(--shot), var(--fallback);
 }
-/* TODO: 慶應ジャージのバックショットに差し替え */
+/* TODO: 慶應ジャージのバックショット撮影後に差し替え（暫定でプール全景を使用） */
 .hs-bg-1 {
-  --shot: none;
-  --fallback: repeating-linear-gradient(115deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
-              linear-gradient(155deg, #06182f 0%, #103459 55%, #1b6ca8 100%);
+  --shot: url("../images/facility/pool.jpg");
+  --fallback: linear-gradient(155deg, #06182f 0%, #103459 55%, #1b6ca8 100%);
 }
-/* TODO: 協生館プール前での部員集合写真に差し替え */
 .hs-bg-2 {
-  --shot: none;
-  --fallback: repeating-linear-gradient(65deg, rgba(255,255,255,.05) 0 2px, transparent 2px 26px),
-              linear-gradient(200deg, #0a2545 0%, #1b6ca8 60%, #4a9fd8 100%);
+  --shot: url("../images/hero/slide2.jpg");
+  --fallback: linear-gradient(200deg, #0a2545 0%, #1b6ca8 60%, #4a9fd8 100%);
 }
-/* TODO: 慶應ガウンを着て円陣を組む写真に差し替え */
 .hs-bg-3 {
-  --shot: none;
-  --fallback: repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, transparent 2px 30px),
-              linear-gradient(140deg, #06182f 0%, #12325a 50%, #0a2545 100%);
+  --shot: url("../images/hero/slide3.jpg");
+  --fallback: linear-gradient(140deg, #06182f 0%, #12325a 50%, #0a2545 100%);
 }
 
 .hs-inner { position: relative; z-index: 2; color: #fff; }
@@ -1846,6 +1841,8 @@ a { color: inherit; }
 .ph-frame img,
 .ph-empty {
   width: 100%;
+  /* height属性が指定されているため、aspect-ratioを効かせるには auto が必要 */
+  height: auto;
   aspect-ratio: 16 / 10;
   border-radius: var(--radius);
   object-fit: cover;
