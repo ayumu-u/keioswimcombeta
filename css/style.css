@@ -2006,28 +2006,6 @@ a { color: inherit; }
 }
 .br-val small { font-size: .64rem; font-weight: 400; color: var(--ink-soft); margin-left: 2px; }
 
-/* 数値表 */
-.dt-table { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 12px; }
-.dt-table summary {
-  cursor: pointer;
-  font-size: .78rem;
-  font-weight: 700;
-  color: var(--ink-soft);
-  list-style: none;
-}
-.dt-table summary::-webkit-details-marker { display: none; }
-.dt-table summary::before { content: "＋ "; color: var(--red); }
-.dt-table[open] summary::before { content: "− "; }
-.dt-table table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-.dt-table th, .dt-table td {
-  padding: 7px 6px;
-  font-size: .78rem;
-  text-align: right;
-  border-bottom: 1px solid var(--line);
-}
-.dt-table thead th { color: var(--ink-soft); font-weight: 700; }
-.dt-table tbody th { text-align: left; font-weight: 600; }
-
 /* ============================================================
    指導体制
    ============================================================ */
@@ -2080,9 +2058,12 @@ a { color: inherit; }
 @media (max-width: 420px) {
   .facility { grid-template-columns: 1fr; }
   .ph-frame.is-wide { grid-column: span 1; }
-  .dt-body { grid-template-columns: 1fr; justify-items: center; }
-  .dt-body .dn { max-width: 160px; }
+  /* justify-items で中央寄せすると棒グラフの幅まで縮んでしまうため、
+     ドーナツ側だけ margin で中央に置く */
+  .dt-body { grid-template-columns: minmax(0, 1fr); }
+  .dt-body .dn { max-width: 160px; margin-inline: auto; }
   .dn-legend { width: 100%; }
+  .bars { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2133,6 +2114,10 @@ a { color: inherit; }
 }
 
 @media (max-width: 780px) {
+  /* PCと同じ280pxだとスマホでは画面の半分近くを占めるため縮める */
+  .coach { gap: 24px; }
+  .coach-photo { max-width: 190px; }
+
   .sp-only { display: inline; }
   .container { width: min(100% - 36px, var(--wrap)); }
 
@@ -2257,3 +2242,8 @@ a { color: inherit; }
 /* さらに狭い端末はロゴのみ（部名はロゴ内に入っている） */
 @media (max-width: 344px) {
   .brand-text { display: none; }
+
+/* 画面が低い端末ではコーチ写真をさらに小さく */
+@media (max-width: 780px) and (max-height: 720px) {
+  .coach-photo { max-width: 150px; }
+}
