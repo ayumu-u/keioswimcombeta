@@ -530,20 +530,30 @@ a { color: inherit; }
   letter-spacing: .04em;
 }
 .coach-body p { color: rgba(255,255,255,.82); font-size: .95rem; margin: 0 0 20px; }
-.coach-points { list-style: none; padding: 0; margin: 30px 0; display: grid; gap: 12px; }
-.coach-points li {
-  position: relative;
-  padding-left: 26px;
-  font-size: .92rem;
-  color: rgba(255,255,255,.9);
+
+/* コーチ紹介の「実績」「役割」ブロック */
+.cf-block {
+  border-top: 1px solid rgba(255,255,255,.16);
+  padding-top: 22px;
+  margin-top: 24px;
 }
-.coach-points li::before {
-  content: "";
-  position: absolute;
-  left: 0; top: .78em;
-  width: 12px; height: 2px;
-  background: var(--red);
+.cf-label {
+  margin: 0 0 10px;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .24em;
+  color: var(--blue-400);
 }
+.cf-title {
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: .03em;
+  color: #fff;
+}
+.cf-block p:last-child { margin-bottom: 0; }
 
 /* ============================================================
    02. 合格体験記（証書デザイン / アコーディオン）
@@ -846,105 +856,128 @@ a { color: inherit; }
 }
 
 /* ============================================================
-   03. タイムテーブル
+   03. 週間スケジュール／タイムライン
    ============================================================ */
-.tt-legend {
+/* 練習時間の凡例 */
+.wk-times {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 18px;
+  gap: 10px 14px;
   margin-bottom: 18px;
 }
-.lg {
-  font-size: .78rem;
+.wt {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 16px;
+  border-radius: 3px;
+  font-size: .88rem;
   font-weight: 700;
-  padding: 5px 14px;
-  border-radius: 2px;
+  font-variant-numeric: tabular-nums;
 }
-.lg-p { background: rgba(200, 16, 46, .1);  color: var(--red-dark); }
-.lg-c { background: rgba(27, 108, 168, .13); color: var(--blue-600); }
-.lg-s { background: rgba(168, 135, 58, .16); color: var(--gold-dark); }
-.lg-f { background: #eceff3; color: var(--ink-soft); }
+.wt b { font-size: .76rem; letter-spacing: .08em; }
+.wt.is-am { background: rgba(27, 108, 168, .12); color: var(--blue-600); }
+.wt.is-pm { background: rgba(200, 16, 46, .1);   color: var(--red-dark); }
 
-.tt-wrap {
-  overflow-x: auto;
+/* 週間表。PCは7列、スマホは曜日ごとの行に折り返すので横スクロールが出ない */
+.wk {
+  list-style: none;
+  margin: 0 0 52px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+.wk-day {
+  background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #fff;
-  margin-bottom: 52px;
+  padding: 14px 12px 16px;
+  display: grid;
+  gap: 11px;
+  align-content: start;
 }
-.tt {
-  width: 100%;
-  min-width: 680px;
-  border-collapse: collapse;
-}
-.tt th, .tt td {
-  border: 1px solid var(--line);
-  padding: 13px 8px;
+.wk-name {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
   text-align: center;
-  font-size: .8rem;
+  color: var(--navy-800);
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
 }
-.tt thead th {
-  background: var(--navy-800);
-  color: #fff;
+.wk-slots { display: grid; gap: 8px; }
+.wk-slot {
+  display: grid;
+  gap: 3px;
+  padding: 9px 6px;
+  border-radius: 3px;
+  font-size: .78rem;
   font-weight: 700;
-  letter-spacing: .08em;
-  border-color: var(--navy-700);
+  line-height: 1.45;
+  text-align: center;
 }
-.tt tbody th {
-  background: var(--bg-tint);
-  font-size: .74rem;
+.wk-slot b {
+  font-size: .66rem;
   font-weight: 700;
-  white-space: nowrap;
-  color: var(--ink-soft);
+  letter-spacing: .1em;
+  opacity: .75;
 }
-.tt td { font-weight: 700; }
-.tt td.p { background: rgba(200, 16, 46, .1);  color: var(--red-dark); }
-.tt td.c { background: rgba(27, 108, 168, .13); color: var(--blue-600); }
-.tt td.s { background: rgba(168, 135, 58, .16); color: var(--gold-dark); }
-.tt td.f { background: #f7f9fb; color: var(--ink-soft); font-weight: 400; }
+.wk-slot.is-am  { background: rgba(27, 108, 168, .12); color: var(--blue-600); }
+.wk-slot.is-pm  { background: rgba(200, 16, 46, .1);   color: var(--red-dark); }
+.wk-slot.is-off { background: var(--bg-tint); color: var(--ink-soft); font-weight: 400; }
 
+.rt-heading {
+  margin: 0 0 20px;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+.day-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
 .day {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 38px 40px 32px;
+  padding: 30px 32px 26px;
 }
 .day-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font-serif);
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  margin: 0 0 26px;
+  margin: 0 0 22px;
   letter-spacing: .04em;
 }
+.day-tag {
+  flex: 0 0 auto;
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 5px 10px;
+  border-radius: 2px;
+}
+.day-tag.is-am { background: rgba(27, 108, 168, .12); color: var(--blue-600); }
+.day-tag.is-pm { background: rgba(200, 16, 46, .1);   color: var(--red-dark); }
+
+/* 縦線と丸は .day-act の左境界に載せる。
+   固定pxのオフセットを使わないので、どの幅でもずれない */
 .day-list {
   list-style: none;
-  margin: 0 0 20px;
-  padding: 0 0 0 8px;
-  position: relative;
-}
-.day-list::before {
-  content: "";
-  position: absolute;
-  left: 77px; top: 10px; bottom: 10px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--blue-400), var(--line));
+  margin: 0;
+  padding: 0;
 }
 .day-list li {
   display: grid;
-  grid-template-columns: 54px 1fr;
-  gap: 40px;
-  align-items: baseline;
-  padding: 9px 0;
-  position: relative;
-}
-.day-list li::before {
-  content: "";
-  position: absolute;
-  left: 73px; top: 1.05em;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid var(--red);
+  grid-template-columns: 4.4em minmax(0, 1fr);
+  gap: 16px;
 }
 .day-time {
   font-family: var(--font-serif);
@@ -952,8 +985,26 @@ a { color: inherit; }
   font-weight: 700;
   color: var(--navy-800);
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
-.day-act { font-size: .9rem; color: var(--ink-soft); }
+.day-act {
+  position: relative;
+  padding: 0 0 22px 20px;
+  border-left: 2px solid var(--line);
+  font-size: .9rem;
+  color: var(--ink-soft);
+}
+.day-list li:last-child .day-act { padding-bottom: 0; border-left-color: transparent; }
+.day-act::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: .35em;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--red);
+}
 
 /* ============================================================
    04. Q&A
@@ -1933,6 +1984,8 @@ a { color: inherit; }
   align-items: center;
 }
 .dt-body.is-bars { grid-template-columns: 1fr; }
+/* 項目数の多いグラフは2カラム分を使う */
+.dt-card.is-wide { grid-column: span 2; }
 
 /* ドーナツ */
 .dn { width: 100%; height: auto; }
@@ -1949,6 +2002,13 @@ a { color: inherit; }
   fill: var(--navy-900);
 }
 .dn-unit { font-size: 11px; fill: var(--ink-soft); letter-spacing: .1em; }
+/* 弧の上に直接置く人数。リング幅24pxに収まるサイズにしている */
+.dn-num {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 700;
+  fill: #fff;
+}
 
 .dn-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .dn-legend li {
@@ -1975,36 +2035,47 @@ a { color: inherit; }
 .lg-val small { font-size: .68rem; font-weight: 400; color: var(--ink-soft); margin-left: 2px; }
 .lg-pct { font-size: .78rem; color: var(--ink-soft); min-width: 2.6em; text-align: right; }
 
-/* 横棒 */
-.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 13px; }
+/* 横棒。人数は棒の内側に置き、収まらない短い棒だけ先端の外に出す */
+.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
 .bars li {
   display: grid;
-  grid-template-columns: 8.5em minmax(0, 1fr) 3.4em;
+  grid-template-columns: 8.5em minmax(0, 1fr);
   gap: 12px;
   align-items: center;
 }
 .br-name { font-size: .82rem; font-weight: 600; }
 .br-track {
-  height: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 28px;
   background: var(--bg-tint);
   border-radius: 4px;
-  overflow: hidden;
 }
 .br-fill {
-  display: block;
+  flex: 0 0 auto;
   height: 100%;
   background: var(--blue-600);
   border-radius: 4px;
   transition: width .8s cubic-bezier(.2,.7,.3,1);
 }
+.br-fill.is-labelled {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
 .br-val {
   font-family: var(--font-serif);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--navy-900);
-  text-align: right;
+  white-space: nowrap;
 }
-.br-val small { font-size: .64rem; font-weight: 400; color: var(--ink-soft); margin-left: 2px; }
+.br-val small { font-size: .64rem; font-weight: 400; margin-left: 1px; }
+/* 棒の内側に載る数値は白抜きにする */
+.br-fill.is-labelled .br-val { color: #fff; }
+.br-fill.is-labelled .br-val small { color: rgba(255,255,255,.8); }
 
 /* ============================================================
    指導体制
@@ -2040,6 +2111,7 @@ a { color: inherit; }
   .ph-frame.is-wide { grid-column: span 2; }
   .env-points, .sys-grid { grid-template-columns: 1fr; gap: 14px; }
   .dt-grid { grid-template-columns: 1fr; }
+  .dt-card.is-wide { grid-column: span 1; }
 }
 
 @media (max-width: 780px) {
@@ -2051,8 +2123,10 @@ a { color: inherit; }
   .dt-title { font-size: 1.05rem; }
   .dt-msg { font-size: .8rem; }
   .lg-val { font-size: 1.1rem; }
-  .bars li { grid-template-columns: 7em minmax(0, 1fr) 3em; gap: 9px; }
+  .bars li { grid-template-columns: 6.4em minmax(0, 1fr); gap: 9px; }
   .br-name { font-size: .76rem; }
+  .br-track { height: 26px; }
+  .br-val { font-size: .92rem; }
 }
 
 @media (max-width: 420px) {
@@ -2178,8 +2252,10 @@ a { color: inherit; }
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  /* 人数が変わっても中央に収まるようにする */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
+  justify-content: center;
+  gap: 24px 40px;
   text-align: center;
 }
 .tr-list li { display: grid; justify-items: center; }
@@ -2264,6 +2340,18 @@ a { color: inherit; }
   .dorm-grid { grid-template-columns: 1fr; gap: 26px; }
   .dorm-photos { grid-template-columns: 1fr 1fr; }
   .coach-block { padding: 28px 22px; }
+  .day-two { grid-template-columns: 1fr; gap: 14px; }
+  /* 7列だと1列が狭くなりすぎるので、曜日ごとの行に切り替える */
+  .wk { grid-template-columns: 1fr; gap: 8px; margin-bottom: 40px; }
+  .wk-day {
+    grid-template-columns: 3.2em minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+  }
+  .wk-name { text-align: left; padding-bottom: 0; border-bottom: 0; }
+  .wk-slots { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+  .wk-slot { display: flex; align-items: baseline; justify-content: center; gap: 7px; }
 }
 
 @media (max-width: 780px) {
@@ -2272,9 +2360,23 @@ a { color: inherit; }
   .pagenav a span { width: 18px; height: 18px; font-size: .62rem; }
   .sup-col { padding: 22px 18px 20px; }
   .sup-title { font-size: 1.05rem; }
-  .tr-list { grid-template-columns: 1fr; gap: 22px; }
+  .tr-list { grid-template-columns: minmax(0, 200px); gap: 26px; }
   .tr-face { width: 108px; height: 108px; }
   .dorm-spec > div { grid-template-columns: 5.4em 1fr; gap: 10px; padding: 13px 0; }
+  .cf-title { font-size: 1.02rem; }
+  .rt-heading { font-size: 1.18rem; }
+  .day { padding: 24px 20px 22px; }
+  .day-title { font-size: 1.05rem; margin-bottom: 18px; }
+  .day-list li { grid-template-columns: 4em minmax(0, 1fr); gap: 12px; }
+  .day-time { font-size: .88rem; }
+  .day-act { font-size: .85rem; padding-left: 16px; padding-bottom: 18px; }
+}
+
+@media (max-width: 420px) {
+  .wk-day { grid-template-columns: 2.6em minmax(0, 1fr); gap: 10px; padding: 9px 12px; }
+  .wk-slot { font-size: .73rem; padding: 8px 4px; }
+  .wk-slot b { font-size: .62rem; }
+  .wt { font-size: .82rem; padding: 8px 13px; }
 }
 
 /* ---------- Reveal ---------- */
