@@ -900,126 +900,6 @@ a { color: inherit; }
 }
 
 /* ============================================================
-   入試方式カード
-   ============================================================ */
-.adm-grid {
-  display: grid;
-  /* min() を挟まないと、320px幅で最小値がそのまま効いてはみ出す */
-  grid-template-columns: repeat(auto-fit, minmax(min(310px, 100%), 1fr));
-  gap: 22px;
-  align-items: start;
-}
-.adm {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--navy-800);
-  border-radius: var(--radius);
-  padding: 30px 28px 28px;
-}
-.adm-head { margin-bottom: 18px; }
-.adm-no {
-  display: block;
-  font-size: .8rem;
-  font-weight: 700;
-  letter-spacing: .2em;
-  color: var(--red);
-  margin-bottom: 10px;
-}
-.adm-name {
-  margin: 0 0 8px;
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: .04em;
-  line-height: 1.5;
-}
-.adm-sub { margin: 0; font-size: .78rem; color: var(--ink-soft); line-height: 1.7; }
-.adm-lead {
-  margin: 0 0 24px;
-  font-size: .88rem;
-  line-height: 1.95;
-  color: var(--ink-soft);
-}
-.adm-lead strong { color: var(--navy-900); }
-
-.adm-sec { margin-bottom: 22px; }
-.adm-h {
-  margin: 0 0 10px;
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .16em;
-  color: var(--blue-600);
-}
-.adm-p { margin: 0; font-size: .85rem; line-height: 1.9; color: var(--ink-soft); }
-/* 対応学部に添える確認のうながし */
-.adm-hint {
-  margin-top: 10px;
-  padding: 12px 14px;
-  background: var(--bg-tint);
-  border-left: 2px solid var(--blue-400);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  font-size: .8rem;
-  line-height: 1.85;
-}
-
-.adm-routes { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
-.adm-routes li {
-  padding-left: 14px;
-  border-left: 2px solid var(--line);
-}
-.ar-name {
-  display: block;
-  font-size: .84rem;
-  font-weight: 700;
-  color: var(--navy-800);
-  margin-bottom: 5px;
-}
-.ar-text { display: block; font-size: .82rem; line-height: 1.85; color: var(--ink-soft); }
-
-/* 「向いている人」だけ地色を敷いて締める */
-.adm-fit {
-  background: var(--bg-tint);
-  border-radius: var(--radius);
-  padding: 18px 18px 16px;
-}
-.adm-tags { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
-.adm-tags li {
-  position: relative;
-  padding-left: 22px;
-  font-size: .83rem;
-  line-height: 1.8;
-  font-weight: 600;
-  color: var(--navy-800);
-}
-.adm-tags li::before {
-  content: "";
-  position: absolute;
-  left: 0; top: .62em;
-  width: 12px; height: 2px;
-  background: var(--red);
-}
-.adm-caution {
-  margin: 30px 0 0;
-  padding: 18px 22px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--red);
-  border-radius: var(--radius);
-  font-size: .87rem;
-  line-height: 1.9;
-  font-weight: 600;
-  color: var(--navy-800);
-}
-.adm-caution .note { display: block; margin-top: 8px; font-weight: 400; }
-
-@media (max-width: 780px) {
-  .adm { padding: 24px 20px 22px; }
-  .adm-name { font-size: 1.15rem; }
-  .adm-lead { font-size: .85rem; }
-  .adm-caution { padding: 15px 16px; font-size: .82rem; }
-}
-
-/* ============================================================
    03. 週間スケジュール／タイムライン
    ============================================================ */
 /* 練習時間の凡例 */
@@ -1307,6 +1187,58 @@ a { color: inherit; }
    入部までの流れ + 連絡先
    ============================================================ */
 
+/* 大学公式PDFへの導線 */
+.pdf-link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 24px 26px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--red);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--navy-900);
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.pdf-link:hover {
+  border-color: var(--blue-600);
+  border-left-color: var(--red);
+  box-shadow: 0 10px 28px rgba(6, 24, 47, .1);
+  transform: translateY(-2px);
+}
+.pdf-icon {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border-radius: 3px;
+  background: var(--red);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+}
+.pdf-text {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: .03em;
+}
+.pdf-arrow {
+  font-size: 1.1rem;
+  color: var(--red);
+  transition: transform .2s;
+}
+.pdf-link:hover .pdf-arrow { transform: translateX(4px); }
+
+@media (max-width: 560px) {
+  .pdf-link { grid-template-columns: auto minmax(0, 1fr); gap: 12px 14px; padding: 20px 18px; }
+  .pdf-text { font-size: .94rem; }
+  /* 矢印は文言の下に回して、狭い幅でも文字が潰れないようにする */
+  .pdf-arrow { grid-column: 2; justify-self: end; }
+}
+
 .contact-box {
   background: linear-gradient(150deg, var(--navy-900), var(--blue-600));
   color: #fff;
@@ -1393,19 +1325,6 @@ a { color: inherit; }
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: .05em;
-}
-/* 主題に添える副題。狭い画面では改行して行に落とす */
-.pg-title-sub {
-  display: inline-block;
-  margin-left: .8em;
-  font-size: .5em;
-  font-weight: 700;
-  letter-spacing: .14em;
-  color: var(--blue-400);
-  vertical-align: middle;
-}
-@media (max-width: 560px) {
-  .pg-title-sub { display: block; margin: 8px 0 0; font-size: .42em; }
 }
 .pg-lead {
   margin: 0;
