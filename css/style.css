@@ -809,6 +809,53 @@ a { color: inherit; }
 
 .itv-body p { margin: 0 0 18px; font-size: .93rem; color: var(--ink-soft); }
 
+/* 体験記本文（4問構成） */
+.cert-story {
+  margin: 0 0 30px;
+  padding-top: 4px;
+  display: grid;
+  gap: 26px;
+}
+.cs-item {
+  padding-bottom: 24px;
+  border-bottom: 1px dotted rgba(10, 37, 69, .24);
+}
+.cs-item:last-child { padding-bottom: 0; border-bottom: 0; }
+.cs-q {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 14px;
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: .04em;
+  color: var(--navy-900);
+}
+.cs-no {
+  flex: 0 0 auto;
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--red);
+}
+.cs-a {
+  margin: 0 0 14px;
+  font-size: .92rem;
+  line-height: 2.05;
+  color: var(--ink-soft);
+}
+.cs-a:last-child { margin-bottom: 0; }
+
+@media (max-width: 780px) {
+  .cert-story { gap: 20px; }
+  .cs-item { padding-bottom: 18px; }
+  .cs-q { font-size: .98rem; gap: 9px; margin-bottom: 11px; }
+  .cs-a { font-size: .88rem; line-height: 1.95; }
+}
+
 .cert-issuer {
   margin: 24px 0 4px;
   padding-top: 16px;
@@ -894,6 +941,16 @@ a { color: inherit; }
   color: var(--blue-600);
 }
 .adm-p { margin: 0; font-size: .85rem; line-height: 1.9; color: var(--ink-soft); }
+/* 対応学部に添える確認のうながし */
+.adm-hint {
+  margin-top: 10px;
+  padding: 12px 14px;
+  background: var(--bg-tint);
+  border-left: 2px solid var(--blue-400);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: .8rem;
+  line-height: 1.85;
+}
 
 .adm-routes { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
 .adm-routes li {
@@ -1454,6 +1511,19 @@ a { color: inherit; }
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: .05em;
+}
+/* 主題に添える副題。狭い画面では改行して行に落とす */
+.pg-title-sub {
+  display: inline-block;
+  margin-left: .8em;
+  font-size: .5em;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--blue-400);
+  vertical-align: middle;
+}
+@media (max-width: 560px) {
+  .pg-title-sub { display: block; margin: 8px 0 0; font-size: .42em; }
 }
 .pg-lead {
   margin: 0;
@@ -2508,6 +2578,10 @@ a { color: inherit; }
   /* PCと同じ280pxだとスマホでは画面の半分近くを占めるため縮める */
   .coach { gap: 24px; }
   .coach-photo { max-width: 190px; }
+
+  /* 2列のままだと見出し152px×2が入りきらず、
+     体験記を開いたときに横スクロールが出る */
+  .cert-fields { grid-template-columns: 1fr; }
 
   .sp-only { display: inline; }
   .container { width: min(100% - 36px, var(--wrap)); }
