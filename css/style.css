@@ -303,6 +303,26 @@ a { color: inherit; }
   margin: 0 0 16px;
 }
 .section-dark .section-eyebrow { color: var(--blue-400); }
+/* ------------------------------------------------------------
+   日本語の折り返し
+   text-wrap は未対応ブラウザでは無視されるだけなので、
+   見出しは balance で行長を揃え、本文は pretty で
+   最終行に1〜2文字だけ残るのを防ぐ
+   ------------------------------------------------------------ */
+h1, h2, h3, h4,
+.pg-title, .section-title, .pillar-title, .hs-copy,
+.contact-box h2, .contact-box h3, .cg-title, .dt-title,
+.sup-title, .cf-title, .cs-q, .pdf-text, .st-main {
+  text-wrap: balance;
+}
+.pg-lead, .pg-note, .section-lead, .section-lead-strong,
+.pillar-catch, .pillar-sub, .dt-msg, .dt-note,
+.contact-box > p, .cs-a, .dm-intro, .cg-list li, .st-sub {
+  text-wrap: pretty;
+}
+/* 句読点や閉じ括弧が行頭に来ないようにする */
+body { line-break: strict; }
+
 .section-title {
   font-family: var(--font-serif);
   font-size: clamp(1.6rem, 3.4vw, 2.4rem);
@@ -674,6 +694,21 @@ a { color: inherit; }
   object-fit: cover;
   transform: scale(var(--zoom, 1.6));
   transform-origin: 50% var(--focus, 25%);
+}
+
+/* 一覧では白衣、開くとジャージへ切り替わる２枚重ね */
+.itv-photo.is-swap { position: relative; }
+.itv-photo.is-swap img {
+  position: absolute;
+  inset: 0;
+  transition: opacity .5s ease;
+}
+.itv-photo.is-swap .ph-b { opacity: 0; }
+.itv.is-open .itv-photo.is-swap .ph-a { opacity: 0; }
+.itv.is-open .itv-photo.is-swap .ph-b { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .itv-photo.is-swap img { transition: none; }
 }
 .cert-badges {
   display: flex;
@@ -1246,6 +1281,7 @@ a { color: inherit; }
   padding: 56px 48px 46px;
   text-align: center;
 }
+.contact-box h2,
 .contact-box h3 {
   font-family: var(--font-serif);
   font-size: clamp(1.4rem, 3.2vw, 2rem);
@@ -1254,6 +1290,69 @@ a { color: inherit; }
   letter-spacing: .04em;
 }
 .contact-box > p { margin: 0 0 34px; color: rgba(255,255,255,.86); font-size: .95rem; }
+
+/* 相談例に付ける小さな見出しタグ */
+.cg-tag {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 9px;
+  border-radius: 2px;
+  background: rgba(200, 16, 46, .1);
+  color: var(--red-dark);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  vertical-align: 1px;
+}
+
+/* DMのコピペ用フォーマット（紺のカードの中に置く） */
+.dm-format {
+  margin: 0 0 30px;
+  padding: 22px 24px 20px;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: var(--radius);
+  text-align: left;
+}
+.dm-intro {
+  margin: 0 0 16px;
+  font-size: .88rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, .9);
+}
+.dm-sub { font-size: .8rem; color: rgba(255, 255, 255, .6); }
+.dm-list {
+  margin: 0;
+  padding: 0 0 0 1.4em;
+  display: grid;
+  gap: 10px;
+  color: #fff;
+  font-size: .95rem;
+  font-weight: 600;
+}
+.dm-list li { padding-left: 4px; }
+.dm-eg {
+  display: block;
+  margin-top: 4px;
+  font-size: .8rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, .68);
+}
+
+/* Instagram への導線はグラデーションで一目で分かるようにする */
+.btn-ig {
+  background: linear-gradient(100deg, #fd5949 0%, #d6249f 55%, #285AEB 100%);
+  border-color: transparent;
+  color: #fff;
+}
+.btn-ig:hover { filter: brightness(1.08); background: linear-gradient(100deg, #fd5949 0%, #d6249f 55%, #285AEB 100%); }
+
+@media (max-width: 560px) {
+  .dm-format { padding: 18px 16px 16px; }
+  .dm-list { font-size: .9rem; }
+}
+
 .contact-actions {
   display: flex;
   gap: 16px;
@@ -1331,6 +1430,13 @@ a { color: inherit; }
   font-size: clamp(.9rem, 1.6vw, 1rem);
   color: rgba(255, 255, 255, .86);
   max-width: 40em;
+}
+.pg-note {
+  margin: 12px 0 0;
+  max-width: 46em;
+  font-size: clamp(.82rem, 1.4vw, .9rem);
+  line-height: 1.95;
+  color: rgba(255, 255, 255, .74);
 }
 /* 下層ページは見出し直後のセクションの余白を詰める */
 .page-head + .section { padding-top: 72px; }
@@ -2266,6 +2372,10 @@ a { color: inherit; }
 }
 
 @media (max-width: 420px) {
+  /* 見出しは <br> で区切った各行が独立して折り返すため、
+     balance だけでは末尾に2文字だけ残ることがある。
+     狭い画面では字を少し詰めて1行に収める */
+  .section-title { font-size: clamp(1.15rem, 5.8vw, 1.6rem); }
   .wk-day { grid-template-columns: 2.6em minmax(0, 1fr); gap: 10px; padding: 9px 12px; }
   .wk-slot { font-size: .73rem; padding: 8px 4px; }
   .wk-slot b { font-size: .62rem; }
