@@ -34,33 +34,6 @@ document.querySelectorAll('.itv-toggle').forEach((btn) => {
   });
 });
 
-// ---- スマホ用 固定CTA（ヒーローを過ぎてから、フッター手前まで表示） ----
-const stickyCta = document.getElementById('stickyCta');
-const hero = document.querySelector('.hero, .page-head');
-const footer = document.querySelector('.site-footer');
-
-if (stickyCta && hero && footer && 'IntersectionObserver' in window) {
-  let pastHero = false;
-  let atFooter = false;
-
-  const applySticky = () => {
-    // フッターには同じ導線があるので、そこまで来たら引っ込める
-    const show = pastHero && !atFooter;
-    stickyCta.classList.toggle('is-shown', show);
-    stickyCta.setAttribute('aria-hidden', String(!show));
-  };
-
-  new IntersectionObserver(([entry]) => {
-    pastHero = !entry.isIntersecting;
-    applySticky();
-  }).observe(hero);
-
-  new IntersectionObserver(([entry]) => {
-    atFooter = entry.isIntersecting;
-    applySticky();
-  }).observe(footer);
-}
-
 // ---- ファーストビューの固定スクロール演出 ----
 const hs = document.getElementById('heroSticky');
 

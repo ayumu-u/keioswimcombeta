@@ -313,6 +313,16 @@ a { color: inherit; }
 }
 .section-lead { margin: 0; color: var(--ink-soft); font-size: .97rem; }
 .section-lead strong { color: var(--ink); }
+/* 見出しと本文のあいだに置く、もう一段のキャッチ */
+.section-lead-strong {
+  margin: 0 0 18px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.7;
+  letter-spacing: .04em;
+  color: var(--blue-600);
+}
 
 /* ============================================================
    ステートメント（スポーツ推薦なし）
@@ -1081,84 +1091,6 @@ a { color: inherit; }
 .wk-slot.is-pm  { background: rgba(200, 16, 46, .1);   color: var(--red-dark); }
 .wk-slot.is-off { background: var(--bg-tint); color: var(--ink-soft); font-weight: 400; }
 
-.rt-heading {
-  margin: 0 0 20px;
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 600;
-  letter-spacing: .04em;
-}
-.day-two {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-}
-.day {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 30px 32px 26px;
-}
-.day-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 0 0 22px;
-  letter-spacing: .04em;
-}
-.day-tag {
-  flex: 0 0 auto;
-  font-family: var(--font-sans);
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  padding: 5px 10px;
-  border-radius: 2px;
-}
-.day-tag.is-am { background: rgba(27, 108, 168, .12); color: var(--blue-600); }
-.day-tag.is-pm { background: rgba(200, 16, 46, .1);   color: var(--red-dark); }
-
-/* 縦線と丸は .day-act の左境界に載せる。
-   固定pxのオフセットを使わないので、どの幅でもずれない */
-.day-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.day-list li {
-  display: grid;
-  grid-template-columns: 4.4em minmax(0, 1fr);
-  gap: 16px;
-}
-.day-time {
-  font-family: var(--font-serif);
-  font-size: .95rem;
-  font-weight: 700;
-  color: var(--navy-800);
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.day-act {
-  position: relative;
-  padding: 0 0 22px 20px;
-  border-left: 2px solid var(--line);
-  font-size: .9rem;
-  color: var(--ink-soft);
-}
-.day-list li:last-child .day-act { padding-bottom: 0; border-left-color: transparent; }
-.day-act::before {
-  content: "";
-  position: absolute;
-  left: -6px;
-  top: .35em;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid var(--red);
-}
 
 /* ============================================================
    04. Q&A
@@ -1226,28 +1158,6 @@ a { color: inherit; }
   font-size: .82rem;
   color: var(--ink-soft);
 }
-
-.essays {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 48px;
-}
-.essay {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--gold);
-  border-radius: var(--radius);
-  padding: 26px 24px;
-}
-.essay h3 {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin: 0 0 10px;
-  letter-spacing: .03em;
-}
-.essay p { margin: 0; font-size: .88rem; color: var(--ink-soft); }
 
 /* ============================================================
    卒業後の進路
@@ -1445,34 +1355,6 @@ a { color: inherit; }
 .footer-nav a { text-decoration: none; font-size: .83rem; }
 .footer-nav a:hover { color: #fff; }
 .copyright { margin: 0; font-size: .73rem; color: rgba(255,255,255,.45); }
-
-/* ---------- スマホ固定CTA ---------- */
-.sticky-cta {
-  display: none;
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  z-index: 90;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-  background: rgba(255, 255, 255, .95);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid var(--line);
-  transform: translateY(110%);
-  transition: transform .3s ease;
-}
-.sticky-cta.is-shown { transform: translateY(0); }
-.sticky-btn {
-  display: block;
-  background: var(--red);
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: .95rem;
-  letter-spacing: .08em;
-  padding: 15px;
-  border-radius: var(--radius);
-}
-.sticky-btn:active { background: var(--red-dark); }
 
 /* ============================================================
    下層ページの見出し
@@ -2386,59 +2268,7 @@ a { color: inherit; }
 }
 .coach-block .note { color: rgba(255,255,255,.6); }
 
-/* トレーナー */
-.tr-heading {
-  margin: 0 0 12px;
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: .05em;
-}
-.tr-lead {
-  margin: 0 0 30px;
-  max-width: 46em;
-  font-size: .9rem;
-  color: var(--ink-soft);
-}
-.tr-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  /* 人数が変わっても中央に収まるようにする */
-  grid-template-columns: repeat(auto-fit, minmax(150px, 200px));
-  justify-content: center;
-  gap: 24px 40px;
-  text-align: center;
-}
-.tr-list li { display: grid; justify-items: center; }
 /* 3人分を1枚にまとめた画像を位置指定で切り出す */
-/* TODO: 写真が届いたら背景に url() を指定する（暫定でプレースホルダ表示） */
-.tr-face {
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  background: var(--bg-tint);
-  border: 1px dashed var(--line);
-  display: grid;
-  place-content: center;
-  margin-bottom: 14px;
-}
-.tr-face::after {
-  content: "PHOTO";
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .22em;
-  text-indent: .22em;
-  color: var(--ink-soft);
-}
-.tr-name {
-  font-size: .96rem;
-  font-weight: 700;
-  letter-spacing: .04em;
-}
-.tr-name small { font-size: .76rem; font-weight: 400; margin-left: 2px; }
-.tr-org { margin-top: 4px; font-size: .78rem; color: var(--ink-soft); }
 
 /* ============================================================
    水泳部寮
@@ -2493,7 +2323,6 @@ a { color: inherit; }
   .dorm-grid { grid-template-columns: 1fr; gap: 26px; }
   .dorm-photos { grid-template-columns: 1fr 1fr; }
   .coach-block { padding: 28px 22px; }
-  .day-two { grid-template-columns: 1fr; gap: 14px; }
   /* 7列だと1列が狭くなりすぎるので、曜日ごとの行に切り替える */
   .wk { grid-template-columns: 1fr; gap: 8px; margin-bottom: 40px; }
   .wk-day {
@@ -2513,16 +2342,8 @@ a { color: inherit; }
   .pagenav a span { width: 18px; height: 18px; font-size: .62rem; }
   .sup-col { padding: 22px 18px 20px; }
   .sup-title { font-size: 1.05rem; }
-  .tr-list { grid-template-columns: minmax(0, 200px); gap: 26px; }
-  .tr-face { width: 108px; height: 108px; }
   .dorm-spec > div { grid-template-columns: 5.4em 1fr; gap: 10px; padding: 13px 0; }
   .cf-title { font-size: 1.02rem; }
-  .rt-heading { font-size: 1.18rem; }
-  .day { padding: 24px 20px 22px; }
-  .day-title { font-size: 1.05rem; margin-bottom: 18px; }
-  .day-list li { grid-template-columns: 4em minmax(0, 1fr); gap: 12px; }
-  .day-time { font-size: .88rem; }
-  .day-act { font-size: .85rem; padding-left: 16px; padding-bottom: 18px; }
 }
 
 @media (max-width: 420px) {
@@ -2545,7 +2366,6 @@ a { color: inherit; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .hero-bg .lane, .scroll-hint span { animation: none; }
   .btn:hover, .itv:hover { transform: none; }
-  .sticky-cta { transition: none; }
 }
 
 /* ============================================================
@@ -2570,7 +2390,6 @@ a { color: inherit; }
   .facts { grid-template-columns: 1fr; }
   .reasons { grid-template-columns: 1fr; }
   .gallery { grid-template-columns: repeat(2, 1fr); }
-  .essays { grid-template-columns: 1fr; }
   .parents-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -2585,8 +2404,6 @@ a { color: inherit; }
 
   .sp-only { display: inline; }
   .container { width: min(100% - 36px, var(--wrap)); }
-
-  body { padding-bottom: 78px; }
 
   .nav-toggle { display: flex; }
   .nav-actions { margin-left: auto; gap: 8px; }
@@ -2618,8 +2435,6 @@ a { color: inherit; }
   .nav.is-open { transform: translateY(0); }
   .nav a { padding: 15px 28px; border-bottom: 1px solid var(--line); font-size: .88rem; }
   .nav a::after { display: none; }
-
-  .sticky-cta { display: block; }
 
   .hero { padding: 74px 0 116px; }
   .section { padding: 68px 0; }
@@ -2670,11 +2485,6 @@ a { color: inherit; }
   .cert-issuer { font-size: .7rem; }
 
   /* タイムテーブル */
-  .day { padding: 28px 22px 24px; }
-  .day-list { padding-left: 0; }
-  .day-list::before { left: 61px; }
-  .day-list li { grid-template-columns: 46px 1fr; gap: 32px; }
-  .day-list li::before { left: 57px; }
 
   /* 雰囲気 */
   .gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; }
