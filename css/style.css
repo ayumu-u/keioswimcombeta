@@ -303,6 +303,9 @@ a { color: inherit; }
   margin: 0 0 16px;
 }
 .section-dark .section-eyebrow { color: var(--blue-400); }
+/* 語句のかたまりを途中で折らずに、かたまり単位で改行させる */
+.nw { display: inline-block; }
+
 /* ------------------------------------------------------------
    日本語の折り返し
    text-wrap は未対応ブラウザでは無視されるだけなので、
@@ -2449,10 +2452,18 @@ body { line-break: strict; }
 
 /* ナビ項目が増えたぶん、ハンバーガーに切り替わる直前を詰める */
 @media (max-width: 940px) and (min-width: 781px) {
-  .nav { gap: 11px; }
-  .nav a { font-size: .72rem; }
-    .brand-main { font-size: .82rem; }
+  /* メニュー名が長くなったぶん、ハンバーガーに切り替わる直前は
+     781px でも1行に収まるところまで詰める */
+  .nav { gap: 8px; }
+  .nav a { font-size: .68rem; letter-spacing: 0; }
+  .brand-logo { width: 34px; }
+  .brand-en { font-size: .82rem; letter-spacing: .06em; }
+  .brand-main { font-size: .56rem; letter-spacing: 0; }
   .brand-sub { font-size: .62rem; }
+  .nav-actions { gap: 7px; }
+  .nav-ig { width: 32px; height: 32px; }
+  .nav-ig svg { width: 22px; height: 22px; }
+  .nav-cta { font-size: .72rem; padding: 9px 12px; }
 }
 
 @media (max-width: 900px) {
@@ -2464,14 +2475,23 @@ body { line-break: strict; }
   .parents-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+@media (max-width: 940px) {
+  /* 2列のままだと見出し152px×2が入りきらず、体験記を開くと横スクロールが出る。
+     加えて値の欄が190px程度まで痩せ、長い所属名が1〜2文字だけ次行に落ちる */
+  .cert-fields { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  /* 見出し欄を詰めて、値の欄の幅を確保する */
+  .cert-fields > div { grid-template-columns: 7.6em minmax(0, 1fr); }
+}
+
 @media (max-width: 780px) {
   /* PCと同じ280pxだとスマホでは画面の半分近くを占めるため縮める */
   .coach { gap: 24px; }
   .coach-photo { max-width: 190px; }
 
-  /* 2列のままだと見出し152px×2が入りきらず、
-     体験記を開いたときに横スクロールが出る */
-  .cert-fields { grid-template-columns: 1fr; }
+
 
   .sp-only { display: inline; }
   .container { width: min(100% - 36px, var(--wrap)); }
