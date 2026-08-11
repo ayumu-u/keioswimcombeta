@@ -894,6 +894,48 @@ body { line-break: strict; }
 }
 .cs-a:last-child { margin-bottom: 0; }
 
+/* 体験記のなかに置く1日のスケジュール */
+.cs-sched {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  gap: 18px;
+}
+.cs-day {
+  background: rgba(10, 37, 69, .04);
+  border: 1px solid rgba(10, 37, 69, .12);
+  border-radius: var(--radius);
+  padding: 18px 20px 16px;
+}
+.cs-day-h {
+  margin: 0 0 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(10, 37, 69, .14);
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--navy-800);
+}
+.cs-times { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.cs-times li {
+  display: grid;
+  grid-template-columns: 7.6em minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+  font-size: .85rem;
+}
+.cs-t {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--navy-800);
+  font-variant-numeric: tabular-nums;
+}
+.cs-e { color: var(--ink-soft); }
+
+@media (max-width: 420px) {
+  .cs-day { padding: 15px 15px 13px; }
+  .cs-times li { grid-template-columns: 7em minmax(0, 1fr); gap: 8px; font-size: .81rem; }
+}
+
 @media (max-width: 780px) {
   .cert-story { gap: 20px; }
   .cs-item { padding-bottom: 18px; }
