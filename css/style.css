@@ -318,7 +318,7 @@ h1, h2, h3, h4,
 .sup-title, .cf-title, .cs-q, .pdf-text, .st-main {
   text-wrap: balance;
 }
-.pg-lead, .pg-note, .section-lead,
+.pg-lead, .pg-note, .section-lead, .section-catch,
 .pillar-catch, .pillar-sub, .dt-msg, .dt-note,
 .contact-box > p, .cs-a, .dm-intro, .cg-list li, .st-sub {
   text-wrap: pretty;
@@ -333,6 +333,16 @@ body { line-break: strict; }
   font-weight: 600;
   margin: 0 0 20px;
   letter-spacing: .03em;
+}
+/* 見出しの下に添える一文（見出しほど強くしない） */
+.section-catch {
+  margin: -6px 0 14px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 2.1vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.7;
+  letter-spacing: .04em;
+  color: var(--navy-800);
 }
 .section-lead { margin: 0; color: var(--ink-soft); font-size: .97rem; }
 .section-lead strong { color: var(--ink); }
