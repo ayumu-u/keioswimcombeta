@@ -318,7 +318,7 @@ h1, h2, h3, h4,
 .sup-title, .cf-title, .cs-q, .pdf-text, .st-main {
   text-wrap: balance;
 }
-.pg-lead, .pg-note, .section-lead, .section-lead-strong,
+.pg-lead, .pg-note, .section-lead,
 .pillar-catch, .pillar-sub, .dt-msg, .dt-note,
 .contact-box > p, .cs-a, .dm-intro, .cg-list li, .st-sub {
   text-wrap: pretty;
@@ -336,16 +336,6 @@ body { line-break: strict; }
 }
 .section-lead { margin: 0; color: var(--ink-soft); font-size: .97rem; }
 .section-lead strong { color: var(--ink); }
-/* 見出しと本文のあいだに置く、もう一段のキャッチ */
-.section-lead-strong {
-  margin: 0 0 18px;
-  font-family: var(--font-serif);
-  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
-  font-weight: 600;
-  line-height: 1.7;
-  letter-spacing: .04em;
-  color: var(--blue-600);
-}
 
 /* ============================================================
    ステートメント（スポーツ推薦なし）
@@ -623,14 +613,6 @@ body { line-break: strict; }
   padding-bottom: 18px;
   margin-bottom: 26px;
 }
-.cert-no {
-  font-family: var(--font-serif);
-  font-size: .78rem;
-  letter-spacing: .34em;
-  text-indent: .34em;
-  color: var(--gold);
-  margin: 0 0 10px;
-}
 .cert-title {
   font-family: var(--font-serif);
   font-size: clamp(1.35rem, 3.2vw, 1.85rem);
@@ -638,13 +620,6 @@ body { line-break: strict; }
   text-indent: .4em;
   font-weight: 600;
   color: var(--navy-900);
-  margin: 0 0 8px;
-}
-.cert-en {
-  font-size: .6rem;
-  letter-spacing: .32em;
-  text-indent: .32em;
-  color: var(--ink-soft);
   margin: 0;
 }
 
@@ -954,75 +929,84 @@ body { line-break: strict; }
 /* ============================================================
    03. 週間スケジュール／タイムライン
    ============================================================ */
-/* 練習時間の凡例 */
-.wk-times {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 14px;
-  margin-bottom: 18px;
-}
-.wt {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 10px;
-  padding: 9px 16px;
-  border-radius: 3px;
-  font-size: .88rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-.wt b { font-size: .76rem; letter-spacing: .08em; }
-.wt.is-am { background: rgba(27, 108, 168, .12); color: var(--blue-600); }
-.wt.is-pm { background: rgba(200, 16, 46, .1);   color: var(--red-dark); }
-
-/* 週間表。PCは7列、スマホは曜日ごとの行に折り返すので横スクロールが出ない */
-.wk {
-  list-style: none;
-  margin: 0 0 52px;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 10px;
-}
-.wk-day {
+/* 週間スケジュール表。曜日 × 朝／午後 の3列を1枚にまとめる */
+.wk-table {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 14px 12px 16px;
+  overflow: hidden;
+}
+.wk-head,
+.wk-row {
   display: grid;
-  gap: 11px;
-  align-content: start;
+  grid-template-columns: 4.6em minmax(0, 1fr) minmax(0, 1fr);
 }
-.wk-name {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
+.wk-head {
+  background: var(--navy-800);
+  color: #fff;
+}
+.wk-th {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 8px;
+  font-size: .84rem;
   font-weight: 700;
-  text-align: center;
-  color: var(--navy-800);
-  padding-bottom: 9px;
-  border-bottom: 1px solid var(--line);
+  letter-spacing: .06em;
 }
-.wk-slots { display: grid; gap: 8px; }
-.wk-slot {
-  display: grid;
-  gap: 3px;
-  padding: 9px 6px;
-  border-radius: 3px;
-  font-size: .78rem;
-  font-weight: 700;
-  line-height: 1.45;
-  text-align: center;
+.wk-th small {
+  font-size: .7rem;
+  font-weight: 400;
+  color: rgba(255,255,255,.7);
+  font-variant-numeric: tabular-nums;
 }
-.wk-slot b {
-  font-size: .66rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  opacity: .75;
-}
-.wk-slot.is-am  { background: rgba(27, 108, 168, .12); color: var(--blue-600); }
-.wk-slot.is-pm  { background: rgba(200, 16, 46, .1);   color: var(--red-dark); }
-.wk-slot.is-off { background: var(--bg-tint); color: var(--ink-soft); font-weight: 400; }
+.wk-th.is-am { box-shadow: inset 1px 0 0 rgba(255,255,255,.16); }
+.wk-th.is-pm { box-shadow: inset 1px 0 0 rgba(255,255,255,.16); }
 
+.wk { list-style: none; margin: 0; padding: 0; }
+.wk-row + .wk-row { border-top: 1px solid var(--line); }
+.wk-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy-800);
+  background: var(--bg-tint);
+  border-right: 1px solid var(--line);
+}
+.wk-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 15px 10px;
+  margin: 5px;
+  border-radius: 3px;
+  font-size: .85rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+/* 練習がある枠ははっきり、オフは沈める */
+.wk-cell.is-am { background: rgba(27, 108, 168, .14); color: var(--blue-600); }
+.wk-cell.is-pm { background: rgba(200, 16, 46, .11);  color: var(--red-dark); }
+.wk-cell.is-off,
+.wk-cell.is-rest {
+  background: transparent;
+  color: var(--ink-soft);
+  font-weight: 400;
+  opacity: .55;
+}
+
+@media (max-width: 560px) {
+  .wk-head, .wk-row { grid-template-columns: 3.4em minmax(0, 1fr) minmax(0, 1fr); }
+  .wk-th { font-size: .76rem; gap: 5px; padding: 11px 4px; flex-wrap: wrap; }
+  .wk-th small { font-size: .64rem; }
+  .wk-cell { font-size: .79rem; padding: 13px 5px; margin: 4px; }
+  .wk-name { font-size: .92rem; }
+}
 
 /* ============================================================
    04. Q&A
@@ -1948,12 +1932,6 @@ body { line-break: strict; }
 /* ============================================================
    施設・環境
    ============================================================ */
-.facility {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 52px;
-}
 .ph-frame { margin: 0; }
 .ph-frame.is-wide { grid-column: span 3; }
 .ph-frame img,
@@ -1995,29 +1973,81 @@ body { line-break: strict; }
   color: var(--ink-soft);
 }
 
-.env-points {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-.env-point {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-top: 3px solid var(--navy-800);
+/* 施設紹介。写真を背景に敷き、暗いグラデーションの上に文字を載せる */
+.env-shots { display: grid; gap: 18px; }
+.es {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   border-radius: var(--radius);
-  padding: 26px 24px 24px;
+  min-height: 300px;
+  display: grid;
+  align-items: end;
 }
-.ep-no {
+.es-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    /* 文字が載る下側を濃くして可読性を確保する */
+    linear-gradient(180deg, rgba(6,24,47,.12) 0%, rgba(6,24,47,.55) 45%, rgba(6,24,47,.9) 100%),
+    var(--shot);
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  transition: transform .6s ease;
+}
+.es:hover .es-bg { transform: scale(1.06); }
+/* url() を含むカスタムプロパティは、変数を使う側（このCSS）を基準に
+   解決されるため、パスはここで持つ */
+.es-1 { --shot: url("../images/facility/pool.jpg"); }
+.es-2 { --shot: url("../images/facility/startblock.jpg"); }
+.es-3 { --shot: url("../images/facility/gym-exterior.jpg"); }
+.es-body {
+  position: relative;
+  padding: 40px 42px 34px;
+  max-width: 46em;
+  color: #fff;
+}
+.es-no {
   display: block;
   margin-bottom: 12px;
   font-family: var(--font-serif);
   font-size: .95rem;
   font-weight: 700;
   letter-spacing: .16em;
-  color: var(--red);
+  color: #fff;
+  opacity: .75;
 }
-.env-point h3 { margin: 0 0 10px; font-size: 1rem; line-height: 1.6; }
-.env-point p { margin: 0; font-size: .88rem; color: var(--ink-soft); }
+.es-title {
+  margin: 0 0 12px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.4vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: .03em;
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+.es-text {
+  margin: 0;
+  font-size: .92rem;
+  line-height: 1.95;
+  color: rgba(255,255,255,.9);
+  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+
+@media (max-width: 780px) {
+  .es { min-height: 260px; }
+  .es-body { padding: 28px 22px 24px; }
+  .es-text { font-size: .86rem; line-height: 1.9; }
+}
+@media (max-width: 420px) {
+  .es { min-height: 230px; }
+  .es-body { padding: 24px 18px 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .es-bg, .es:hover .es-bg { transition: none; transform: none; }
+}
 
 /* ============================================================
    部員構成データ
@@ -2157,17 +2187,6 @@ body { line-break: strict; }
 /* ============================================================
    指導体制
    ============================================================ */
-.sys-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-}
-.sys-card {
-  background: var(--bg-tint);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 28px 26px 24px;
-}
 .sys-no {
   display: inline-grid;
   place-items: center;
@@ -2180,21 +2199,15 @@ body { line-break: strict; }
   font-weight: 700;
   margin-bottom: 14px;
 }
-.sys-card h3 { margin: 0 0 10px; font-size: 1rem; line-height: 1.6; }
-.sys-card p { margin: 0; font-size: .88rem; color: var(--ink-soft); }
 
 @media (max-width: 900px) {
-  .facility { grid-template-columns: repeat(2, 1fr); }
   .ph-frame.is-wide { grid-column: span 2; }
-  .env-points, .sys-grid { grid-template-columns: 1fr; gap: 14px; }
   .dt-grid { grid-template-columns: 1fr; }
   .dt-card.is-wide { grid-column: span 1; }
 }
 
 @media (max-width: 780px) {
-  .facility { gap: 12px; margin-bottom: 36px; }
   .ph-frame figcaption { margin-top: 7px; font-size: .74rem; }
-  .env-point, .sys-card { padding: 20px 18px 18px; }
   .dt-card { padding: 22px 18px 18px; }
   .dt-body { grid-template-columns: 118px minmax(0, 1fr); gap: 16px; }
   .dt-title { font-size: 1.05rem; }
@@ -2207,7 +2220,6 @@ body { line-break: strict; }
 }
 
 @media (max-width: 420px) {
-  .facility { grid-template-columns: 1fr; }
   .ph-frame.is-wide { grid-column: span 1; }
   /* justify-items で中央寄せすると棒グラフの幅まで縮んでしまうため、
      ドーナツ側だけ margin で中央に置く */
@@ -2365,17 +2377,6 @@ body { line-break: strict; }
   .dorm-grid { grid-template-columns: 1fr; gap: 26px; }
   .dorm-photos { grid-template-columns: 1fr 1fr; }
   .coach-block { padding: 28px 22px; }
-  /* 7列だと1列が狭くなりすぎるので、曜日ごとの行に切り替える */
-  .wk { grid-template-columns: 1fr; gap: 8px; margin-bottom: 40px; }
-  .wk-day {
-    grid-template-columns: 3.2em minmax(0, 1fr);
-    align-items: center;
-    gap: 14px;
-    padding: 10px 14px;
-  }
-  .wk-name { text-align: left; padding-bottom: 0; border-bottom: 0; }
-  .wk-slots { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
-  .wk-slot { display: flex; align-items: baseline; justify-content: center; gap: 7px; }
 }
 
 @media (max-width: 780px) {
@@ -2393,10 +2394,6 @@ body { line-break: strict; }
      balance だけでは末尾に2文字だけ残ることがある。
      狭い画面では字を少し詰めて1行に収める */
   .section-title { font-size: clamp(1.15rem, 5.8vw, 1.6rem); }
-  .wk-day { grid-template-columns: 2.6em minmax(0, 1fr); gap: 10px; padding: 9px 12px; }
-  .wk-slot { font-size: .73rem; padding: 8px 4px; }
-  .wk-slot b { font-size: .62rem; }
-  .wt { font-size: .82rem; padding: 8px 13px; }
 }
 
 /* ---------- Reveal ---------- */
@@ -2462,8 +2459,6 @@ body { line-break: strict; }
   /* PCと同じ280pxだとスマホでは画面の半分近くを占めるため縮める */
   .coach { gap: 24px; }
   .coach-photo { max-width: 190px; }
-
-
 
   .sp-only { display: inline; }
   .container { width: min(100% - 36px, var(--wrap)); }
