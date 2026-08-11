@@ -1445,7 +1445,8 @@ body { line-break: strict; }
 /* ============================================================
    動画
    ============================================================ */
-.movie { padding: 0 0 84px; }
+/* ファーストビューの直後なので、上にも余白を取って区切りをつくる */
+.movie { padding: 76px 0 84px; }
 .video-frame {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -1980,7 +1981,7 @@ body { line-break: strict; }
   .page-head { padding: 40px 0 74px; }
   .crumb { margin-bottom: 18px; font-size: .7rem; }
   .page-head + .section { padding-top: 54px; }
-  .movie { padding-bottom: 58px; }
+  .movie { padding: 44px 0 58px; }
   .pillars { padding-bottom: 66px; }
   .contact-guide { margin-top: 32px; padding: 24px 20px 20px; }
 }
