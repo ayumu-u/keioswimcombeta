@@ -308,21 +308,55 @@ a { color: inherit; }
 
 /* ------------------------------------------------------------
    日本語の折り返し
-   text-wrap は未対応ブラウザでは無視されるだけなので、
-   見出しは balance で行長を揃え、本文は pretty で
-   最終行に1〜2文字だけ残るのを防ぐ
+
+   日本語は語の切れ目が分からないため、ブラウザは任意の文字間で
+   改行する（「可動床対 / 応）。」のように語の途中で折れる）。
+   そこで scripts/wrap_phrases.py が BudouX で文節を判定し、
+   境界に <wbr> を焼き込んでいる。ここではその <wbr> だけを
+   改行位置として使わせる。
+
+     word-break: keep-all   … <wbr> 以外では折らない
+     overflow-wrap: break-word … 1文節が1行に収まらない時だけ折る（保険）
+     text-wrap: balance     … 使える改行位置のなかで行長を揃える
    ------------------------------------------------------------ */
-h1, h2, h3, h4,
-.pg-title, .section-title, .pillar-title, .hs-copy,
-.contact-box h2, .contact-box h3, .cg-title, .dt-title,
-.sup-title, .cf-title, .cs-q, .pdf-text, .st-main {
+/* keep-all を効かせる対象は、必ず <wbr> を焼き込んだ要素だけにする。
+   <wbr> の無い要素に keep-all を掛けると、その要素が一切折り返せず
+   コンテナごと画面外へはみ出すため */
+.pg-title, .pg-lead, .pg-note,
+.section-title, .section-catch, .section-lead,
+.pillar-title, .pillar-sub, .pillar-catch,
+.es-title, .es-text,
+.sup-label, .sup-title, .cf-label, .cf-title,
+.dt-title, .dt-msg, .dt-note,
+.cs-q, .cs-day-h, .cg-title, .pdf-text,
+.hs-copy, .hs-body, .st-lead, .st-main, .st-sub,
+.parents-title, .parents-lead,
+.vp-title, .wk-th, .wk-cell, .cc-cat,
+.dorm-note, .cert-title, .coach-role,
+.faq summary, .contact-box h2, .contact-box h3, .pcard h3 {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+/* 見出しは行長を揃え、本文は最終行に1〜2文字だけ残らないようにする */
+.pg-title, .section-title, .section-catch, .pillar-title,
+.es-title, .sup-title, .cf-title, .dt-title, .cs-q,
+.cg-title, .pdf-text, .hs-copy, .st-main, .parents-title, .vp-title,
+.contact-box h2, .contact-box h3, .pcard h3, .faq summary {
   text-wrap: balance;
 }
-.pg-lead, .pg-note, .section-lead, .section-catch,
-.pillar-catch, .pillar-sub, .dt-msg, .dt-note,
-.contact-box > p, .cs-a, .dm-intro, .cg-list li, .st-sub {
+.pg-lead, .pg-note, .section-lead, .pillar-catch, .pillar-sub,
+.es-text, .dt-msg, .dt-note, .cg-list li, .hs-body,
+.st-sub, .parents-lead, .pcard p, .dorm-note, .contact-box > p, .cs-a {
   text-wrap: pretty;
 }
+/* keep-all は「折り返せない最小幅」を押し上げるため、
+   グリッドの子は min-width:auto のままだと列がはみ出す。
+   縮められるようにしておく */
+.parents-grid > *, .pillar-grid > *, .dt-grid > *,
+.sup-two > *, .dorm-grid > *, .cs-sched > *,
+.env-shots > *, .wk-row > *, .wk-head > * { min-width: 0; }
+
 /* 句読点や閉じ括弧が行頭に来ないようにする */
 body { line-break: strict; }
 
