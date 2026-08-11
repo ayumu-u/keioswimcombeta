@@ -578,17 +578,6 @@ body { line-break: strict; }
 /* ============================================================
    02. 合格体験記（証書デザイン / アコーディオン）
    ============================================================ */
-.sample-notice {
-  background: #fff8e6;
-  border: 1px solid #f0d9a0;
-  border-left: 4px solid #d9a520;
-  border-radius: var(--radius);
-  padding: 18px 22px;
-  font-size: .85rem;
-  color: #6b5410;
-  margin: 0 0 40px;
-  line-height: 1.85;
-}
 
 .interviews { display: grid; gap: 32px; }
 
@@ -765,26 +754,6 @@ body { line-break: strict; }
 }
 .cert-role.is-pending { color: rgba(10, 37, 69, .4); }
 
-.cert-pending {
-  text-align: center;
-  padding: 26px 18px 6px;
-  border-top: 1px solid rgba(10, 37, 69, .12);
-}
-.cert-pending-title {
-  font-family: var(--font-serif);
-  font-size: .95rem;
-  font-weight: 600;
-  letter-spacing: .26em;
-  text-indent: .26em;
-  color: var(--gold-dark);
-  margin: 0 0 10px;
-}
-.cert-pending-text {
-  margin: 0;
-  font-size: .86rem;
-  color: var(--ink-soft);
-}
-
 .cert-seal {
   width: 78px; height: 78px;
   justify-self: end;
@@ -933,10 +902,13 @@ body { line-break: strict; }
   font-variant-numeric: tabular-nums;
 }
 .cs-e { color: var(--ink-soft); }
+/* 「22:00〜23:00頃」のように時刻表記が長い場合 */
+.cs-times.is-wide li { grid-template-columns: 10.4em minmax(0, 1fr); }
 
 @media (max-width: 420px) {
   .cs-day { padding: 15px 15px 13px; }
   .cs-times li { grid-template-columns: 7em minmax(0, 1fr); gap: 8px; font-size: .81rem; }
+  .cs-times.is-wide li { grid-template-columns: 9.6em minmax(0, 1fr); }
 }
 
 @media (max-width: 780px) {
@@ -2547,7 +2519,6 @@ body { line-break: strict; }
       0 0 0 4px rgba(168, 135, 58, .35),
       0 3px 10px rgba(10, 37, 69, .18);
   }
-  .cert-pending { padding: 20px 4px 4px; }
 }
 
 /* 極小幅では朱印を行から外し、氏名欄の横幅を確保する */
