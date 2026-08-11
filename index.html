@@ -14,7 +14,7 @@
 </script>
 <title>慶應義塾体育会水泳部 競泳部門</title>
 <meta name="description" content="慶應義塾体育会水泳部 競泳部門。水泳とキャリア、どちらも一切妥協しない4年間。慶應水泳部の紹介、入試案内と合格体験記、Q&Aと保護者の方へのご案内。">
-<link rel="stylesheet" href="css/style.css?v=58">
+<link rel="stylesheet" href="css/style.css?v=59">
 </head>
 <body id="top">
 
@@ -123,16 +123,21 @@
 <!-- ===== 動画 ===== -->
 <section class="movie">
   <div class="container container-narrow">
-    <!-- TODO: YouTube のリンクを受け取ったら、下の .video-frame の中身を
-         <iframe src="https://www.youtube.com/embed/【動画ID】" title="紹介動画"
-                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                 allowfullscreen loading="lazy"></iframe>
-         に差し替える（枠と余白はこのままで表示されます） -->
     <div class="video-frame reveal">
-      <div class="video-placeholder">
-        <span class="vp-icon" aria-hidden="true"></span>
-        <p class="vp-text">紹介動画 準備中</p>
-      </div>
+      <button class="vplayer" type="button"
+              data-video="gWCpo2f1ZX8"
+              aria-label="紹介動画「慶應水泳部 | 紹介動画」を再生する">
+        <img class="vp-thumb" src="images/video/intro-thumb.jpg" width="1280" height="720"
+             alt="" loading="lazy" decoding="async">
+        <span class="vp-shade" aria-hidden="true"></span>
+        <span class="vp-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><path d="M8.5 5.6v12.8L19 12z"></path></svg>
+        </span>
+        <span class="vp-meta">
+          <span class="vp-eyebrow">MOVIE</span>
+          <span class="vp-title">慶應水泳部 | 紹介動画</span>
+        </span>
+      </button>
     </div>
   </div>
 </section>
@@ -207,6 +212,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=3"></script>
+<script src="js/main.js?v=4"></script>
 </body>
 </html>

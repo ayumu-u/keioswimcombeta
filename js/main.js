@@ -86,3 +86,18 @@ if ('IntersectionObserver' in window) {
 } else {
   targets.forEach((el) => el.classList.add('is-visible'));
 }
+
+// ---- 紹介動画（押されてから YouTube を読み込む） ----
+document.querySelectorAll('.vplayer').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const frame = document.createElement('iframe');
+    // nocookie 版を使い、再生するまでクッキーを置かない
+    frame.src = 'https://www.youtube-nocookie.com/embed/' + btn.dataset.video
+      + '?autoplay=1&rel=0&playsinline=1';
+    frame.title = btn.querySelector('.vp-title').textContent;
+    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    frame.allowFullscreen = true;
+    btn.replaceWith(frame);
+    frame.focus();
+  });
+});
