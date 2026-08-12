@@ -333,7 +333,8 @@ a { color: inherit; }
 .parents-title, .parents-lead,
 .vp-title, .wk-th, .wk-cell, .cc-cat,
 .dorm-note, .cert-title, .coach-role,
-.faq summary, .contact-box h2, .contact-box h3, .pcard h3 {
+.faq summary, .contact-box h2, .contact-box h3, .pcard h3,
+.fb-title, .fb-text {
   word-break: keep-all;
   overflow-wrap: break-word;
 }
@@ -342,7 +343,7 @@ a { color: inherit; }
 .pg-title, .section-title, .section-catch, .pillar-title,
 .es-title, .sup-title, .cf-title, .dt-title, .cs-q,
 .cg-title, .pdf-text, .hs-copy, .st-main, .parents-title, .vp-title,
-.contact-box h2, .contact-box h3, .pcard h3, .faq summary {
+.contact-box h2, .contact-box h3, .pcard h3, .faq summary, .fb-title {
   text-wrap: balance;
 }
 .pg-lead, .pg-note, .section-lead, .pillar-catch, .pillar-sub,
@@ -354,7 +355,7 @@ a { color: inherit; }
    グリッドの子は min-width:auto のままだと列がはみ出す。
    縮められるようにしておく */
 .parents-grid > *, .pillar-grid > *, .dt-grid > *,
-.sup-two > *, .dorm-grid > *, .cs-sched > *,
+.sup-two > *, .cs-sched > *,
 .env-shots > *, .wk-row > *, .wk-head > * { min-width: 0; }
 
 /* 句読点や閉じ括弧が行頭に来ないようにする */
@@ -1373,6 +1374,61 @@ body { line-break: strict; }
 @media (max-width: 560px) {
   .dm-format { padding: 18px 16px 16px; }
   .dm-list { font-size: .9rem; }
+}
+
+/* 全国大会の現地相談＋Webフォーム。
+   紺のDMカードのすぐ下に置くので、白地で対比させる */
+.form-box {
+  margin-top: 20px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--red);
+  border-radius: var(--radius);
+  padding: 34px 36px 28px;
+  text-align: center;
+}
+.fb-title {
+  margin: 0 0 16px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2.4vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: .03em;
+}
+.fb-badge {
+  display: block;
+  margin: 0 auto 10px;
+  width: fit-content;
+  padding: 5px 14px;
+  border-radius: 2px;
+  background: rgba(200, 16, 46, .1);
+  color: var(--red-dark);
+  font-family: var(--font-sans);
+  font-size: .74rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+.fb-text {
+  margin: 0 0 24px;
+  font-size: .9rem;
+  line-height: 1.95;
+  color: var(--ink-soft);
+  text-align: left;
+}
+.btn-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-color: var(--navy-800);
+  color: var(--navy-800);
+}
+.btn-form:hover { background: var(--navy-800); color: #fff; }
+.form-box .note { margin-top: 14px; }
+
+@media (max-width: 560px) {
+  .form-box { padding: 26px 20px 22px; }
+  .fb-text { font-size: .86rem; }
+  .btn-form { width: 100%; justify-content: center; }
 }
 
 .contact-actions {
@@ -2404,21 +2460,31 @@ body { line-break: strict; }
 /* ============================================================
    水泳部寮
    ============================================================ */
-.dorm-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: start;
+/* 寮の写真は横幅いっぱいの1枚 */
+.dorm-shot { margin: 0 0 36px; }
+.dorm-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: 0 18px 46px rgba(10, 37, 69, .18);
 }
-.dorm-photos { display: grid; gap: 14px; }
-.dorm-photos .ph-frame img,
-.dorm-photos .ph-frame .ph-empty { aspect-ratio: 4 / 3; }
-.dorm-photos .ph-frame:first-child img,
-.dorm-photos .ph-frame:first-child .ph-empty { aspect-ratio: 3 / 4; }
+.dorm-shot figcaption {
+  margin-top: 14px;
+  font-size: .85rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
 
 .dorm-spec {
   margin: 0 0 26px;
   border-top: 1px solid var(--line);
+  /* 全幅になったぶん、3項目を横に並べる */
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 34px;
 }
 .dorm-spec > div {
   display: grid;
@@ -2451,8 +2517,6 @@ body { line-break: strict; }
 
 @media (max-width: 900px) {
   .sup-two { grid-template-columns: 1fr; gap: 16px; }
-  .dorm-grid { grid-template-columns: 1fr; gap: 26px; }
-  .dorm-photos { grid-template-columns: 1fr 1fr; }
   .coach-block { padding: 28px 22px; }
 }
 
@@ -2462,6 +2526,10 @@ body { line-break: strict; }
   .pagenav a span { width: 18px; height: 18px; font-size: .62rem; }
   .sup-col { padding: 22px 18px 20px; }
   .sup-title { font-size: 1.05rem; }
+  .dorm-spec { grid-template-columns: 1fr; gap: 0; }
+  .dorm-shot { margin-bottom: 26px; }
+  .dorm-shot img { aspect-ratio: 4 / 3; }
+  .dorm-shot figcaption { margin-top: 11px; font-size: .8rem; }
   .dorm-spec > div { grid-template-columns: 5.4em 1fr; gap: 10px; padding: 13px 0; }
   .cf-title { font-size: 1.02rem; }
 }

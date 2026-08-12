@@ -37,6 +37,7 @@ TARGETS = [
     "cert-title", "coach-role", "day-title",
     "dorm-note", "routes-title", "adm-name", "adm-title",
     "footer-name", "contact-box-h", "cc-cat",
+    "fb-title", "fb-text",
 ]
 # クラスを持たない要素も対象にする（タグ名で指定）
 TAG_TARGETS = [
@@ -77,6 +78,26 @@ def merge_short(chunks: list) -> list:
     return out
 
 
+KANJI = re.compile(r"[一-鿿々]")
+
+
+def drop_kanji_boundaries(chunks: list) -> list:
+    """漢字と漢字のあいだの区切りを捨てる。
+
+    日本語の文節はふつう助詞（かな）か句読点で終わる。
+    漢字が続く位置での区切りは熟語の途中である場合が多く、
+    実際「体育会」→「体 / 育会」、「紹介動画」→「紹 / 介動画」
+    のように割れていた。
+    """
+    out = [chunks[0]] if chunks else []
+    for ch in chunks[1:]:
+        if out and KANJI.match(out[-1][-1]) and KANJI.match(ch[0]):
+            out[-1] += ch
+        else:
+            out.append(ch)
+    return out
+
+
 def segment(text: str) -> str:
     """テキストの文節境界に <wbr> を挿す。"""
     if not text.strip():
@@ -85,7 +106,7 @@ def segment(text: str) -> str:
     lead = text[: len(text) - len(text.lstrip())]
     trail = text[len(text.rstrip()):]
     body = text.strip()
-    chunks = merge_short(parser.parse(body))
+    chunks = drop_kanji_boundaries(merge_short(parser.parse(body)))
     return lead + "<wbr>".join(chunks) + trail
 
 
