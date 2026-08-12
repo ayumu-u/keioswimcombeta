@@ -2135,7 +2135,9 @@ body { line-break: strict; }
    解決されるため、パスはここで持つ */
 .es-1 { --shot: url("../images/facility/pool.jpg"); }
 .es-2 { --shot: url("../images/facility/startblock.jpg"); }
-.es-3 { --shot: url("../images/facility/gym-exterior.jpg"); }
+/* 帯状に切り取られるので、選手が入る位置に寄せる */
+.es-3 { --shot: url("../images/facility/gym-training.jpg"); }
+.es-3 .es-bg { background-position: 50% 32%; }
 .es-body {
   position: relative;
   padding: 40px 42px 34px;
@@ -2460,22 +2462,39 @@ body { line-break: strict; }
 /* ============================================================
    水泳部寮
    ============================================================ */
-/* 寮の写真は横幅いっぱいの1枚 */
-.dorm-shot { margin: 0 0 36px; }
-.dorm-shot img {
+/* 寮の写真は2枚並び。縦横比の違う写真でも揃って見えるよう
+   どちらも4:3に切り抜いて表示する */
+.dorm-shots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.ds { margin: 0; }
+.ds img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   border-radius: var(--radius);
-  box-shadow: 0 18px 46px rgba(10, 37, 69, .18);
+  box-shadow: 0 14px 34px rgba(10, 37, 69, .16);
 }
-.dorm-shot figcaption {
-  margin-top: 14px;
-  font-size: .85rem;
+.ds figcaption {
+  margin-top: 10px;
+  font-size: .82rem;
   color: var(--ink-soft);
   text-align: center;
+}
+.dorm-caption {
+  margin: 18px 0 36px;
+  font-size: .88rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  /* 2枚並びだと1枚が小さくなりすぎるので縦に積む */
+  .dorm-shots { grid-template-columns: 1fr; gap: 20px; }
 }
 
 .dorm-spec {
@@ -2527,9 +2546,7 @@ body { line-break: strict; }
   .sup-col { padding: 22px 18px 20px; }
   .sup-title { font-size: 1.05rem; }
   .dorm-spec { grid-template-columns: 1fr; gap: 0; }
-  .dorm-shot { margin-bottom: 26px; }
-  .dorm-shot img { aspect-ratio: 4 / 3; }
-  .dorm-shot figcaption { margin-top: 11px; font-size: .8rem; }
+  .dorm-caption { margin: 14px 0 26px; font-size: .83rem; }
   .dorm-spec > div { grid-template-columns: 5.4em 1fr; gap: 10px; padding: 13px 0; }
   .cf-title { font-size: 1.02rem; }
 }
