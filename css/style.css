@@ -1465,6 +1465,60 @@ body { line-break: strict; }
 .footer-nav a:hover { color: #fff; }
 .copyright { margin: 0; font-size: .73rem; color: rgba(255,255,255,.45); }
 
+/* ---------- Sponsors ---------- */
+.sponsors {
+  background: var(--bg-tint);
+  border-top: 1px solid var(--line);
+  padding: 44px 0;
+}
+.sponsors-label {
+  margin: 0 0 22px;
+  text-align: center;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+  color: var(--ink-soft);
+}
+.sponsor-row {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.sponsor-banner {
+  width: 264px;
+  max-width: 100%;
+}
+.sponsor-banner a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 6;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+}
+.sponsor-banner a:hover {
+  border-color: var(--blue-400);
+  box-shadow: 0 8px 22px rgba(6, 24, 47, .12);
+  transform: translateY(-2px);
+}
+.sb-name {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+  color: var(--navy-900);
+}
+@media (max-width: 600px) {
+  .sponsor-banner { width: min(280px, 100%); }
+  .sb-name { font-size: 1.35rem; }
+}
+
 /* ============================================================
    下層ページの見出し
    ============================================================ */
